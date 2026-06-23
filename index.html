@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Système Auro – Agence Web Artisans</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#0d1117;color:white;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.container{max-width:700px;text-align:center}
+h1{font-size:2.5rem;margin-bottom:0.5rem;color:#58a6ff}
+.sub{color:#8b949e;font-size:1rem;margin-bottom:3rem}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:2rem;text-decoration:none;color:white;transition:border-color 0.2s}
+.card:hover{border-color:#58a6ff}
+.card-icon{font-size:2.5rem;margin-bottom:0.8rem}
+.card-title{font-size:1.1rem;font-weight:700;margin-bottom:0.4rem;color:#f0f6fc}
+.card-desc{font-size:0.8rem;color:#8b949e;line-height:1.6}
+.badge{display:inline-block;background:#238636;color:white;padding:0.3rem 0.8rem;border-radius:20px;font-size:0.75rem;margin-bottom:1rem}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="badge">✅ Système opérationnel</div>
+  <h1>🏗️ Système Auro</h1>
+  <p class="sub">Mini-agence web pour artisans — Chromebook compatible</p>
+  <div class="cards">
+    <a href="templates/generator/index.html" class="card">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">Générateur</div>
+      <div class="card-desc">Remplis un formulaire → site artisan généré en 2 minutes</div>
+    </a>
+    <a href="templates/artisan-base.html" class="card">
+      <div class="card-icon">👁️</div>
+      <div class="card-title">Template de base</div>
+      <div class="card-desc">Voir le template vierge avec tous les placeholders</div>
+    </a>
+  </div>
+  <p style="color:#8b949e;font-size:0.8rem">Nanda Web Designer · 2024</p>
+</div>
+</body>
+</html>
