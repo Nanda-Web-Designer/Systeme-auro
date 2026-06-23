@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Générateur de sites artisans</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f0f4f8;padding:2rem}
+h1{color:#1A5276;margin-bottom:0.3rem;font-size:1.5rem}
+.subtitle{color:#5D6D7E;font-size:0.85rem;margin-bottom:2rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:900px}
+.form-group{display:flex;flex-direction:column;gap:0.4rem}
+.form-group.full{grid-column:1/-1}
+label{font-size:0.78rem;font-weight:600;color:#1A5276;text-transform:uppercase;letter-spacing:0.05em}
+input,textarea,select{padding:0.7rem;border:1.5px solid #D5E8F5;border-radius:6px;font-size:0.9rem;font-family:Arial,sans-serif;outline:none}
+input:focus,textarea:focus{border-color:#2E86C1}
+textarea{min-height:80px;resize:vertical}
+.section-title{grid-column:1/-1;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#85C1E9;background:#1A5276;padding:0.5rem 0.8rem;border-radius:4px;margin-top:0.5rem}
+.btn-generate{grid-column:1/-1;background:#1A5276;color:white;border:none;padding:1rem;border-radius:6px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:1rem;transition:background 0.2s}
+.btn-generate:hover{background:#2E86C1}
+.btn-download{display:none;grid-column:1/-1;background:#27AE60;color:white;border:none;padding:1rem;border-radius:6px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:0.5rem}
+.success{display:none;grid-column:1/-1;background:#E8F8F5;border:1px solid #A9DFBF;border-radius:6px;padding:1rem;color:#1E8449;font-size:0.88rem;margin-top:0.5rem}
+</style>
+</head>
+<body>
+
+<h1>🏗️ Générateur de sites artisans</h1>
+<p class="subtitle">Remplis le formulaire → le site se génère automatiquement</p>
+
+<div class="form-grid">
+
+  <div class="section-title">📋 Informations générales</div>
+
+  <div class="form-group">
+    <label>Nom de l'entreprise *</label>
+    <input type="text" id="NOM_ENTREPRISE" placeholder="La Plomberie du Ruisseau" required>
+  </div>
+  <div class="form-group">
+    <label>Métier *</label>
+    <input type="text" id="METIER" placeholder="Plombier, Électricien, Menuisier...">
+  </div>
+  <div class="form-group">
+    <label>Ville *</label>
+    <input type="text" id="VILLE" placeholder="Paris 18ème">
+  </div>
+  <div class="form-group">
+    <label>Téléphone *</label>
+    <input type="text" id="TELEPHONE" placeholder="01.42.23.05.40">
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="text" id="EMAIL" placeholder="contact@entreprise.fr">
+  </div>
+  <div class="form-group">
+    <label>Adresse</label>
+    <input type="text" id="ADRESSE" placeholder="35 Rue du Ruisseau, 75018 Paris">
+  </div>
+  <div class="form-group">
+    <label>Expérience</label>
+    <input type="text" id="EXPERIENCE" placeholder="20 ans d'expérience">
+  </div>
+  <div class="form-group">
+    <label>SIRET</label>
+    <input type="text" id="SIRET" placeholder="SARL · RCS Paris B443 564 430">
+  </div>
+
+  <div class="section-title">💬 Textes & slogans</div>
+
+  <div class="form-group">
+    <label>Slogan court</label>
+    <input type="text" id="SLOGAN_COURT" placeholder="ça coule de source">
+  </div>
+  <div class="form-group">
+    <label>Slogan long</label>
+    <input type="text" id="SLOGAN_LONG" placeholder="Notre engagement depuis 20 ans">
+  </div>
+  <div class="form-group full">
+    <label>Description hero</label>
+    <textarea id="DESCRIPTION" placeholder="Dépannage, installation, rénovation complète — une entreprise familiale à votre service..."></textarea>
+  </div>
+  <div class="form-group full">
+    <label>Badge urgence</label>
+    <input type="text" id="BADGE_URGENCE" placeholder="Intervention rapide · Devis gratuit sur place">
+  </div>
+  <div class="form-group full">
+    <label>Texte urgence band</label>
+    <input type="text" id="URGENCE_TEXTE" placeholder="Fuite d'eau ou urgence ? On intervient rapidement">
+  </div>
+
+  <div class="section-title">📊 Statistiques (4 chiffres clés)</div>
+
+  <div class="form-group">
+    <label>Stat 1 — Chiffre</label>
+    <input type="text" id="STAT1_NUM" placeholder="20">
+  </div>
+  <div class="form-group">
+    <label>Stat 1 — Label</label>
+    <input type="text" id="STAT1_LABEL" placeholder="Ans d'expérience">
+  </div>
+  <div class="form-group">
+    <label>Stat 2 — Chiffre</label>
+    <input type="text" id="STAT2_NUM" placeholder="Paris">
+  </div>
+  <div class="form-group">
+    <label>Stat 2 — Label</label>
+    <input type="text" id="STAT2_LABEL" placeholder="& banlieue">
+  </div>
+  <div class="form-group">
+    <label>Stat 3 — Chiffre</label>
+    <input type="text" id="STAT3_NUM" placeholder="Famille">
+  </div>
+  <div class="form-group">
+    <label>Stat 3 — Label</label>
+    <input type="text" id="STAT3_LABEL" placeholder="Entreprise familiale">
+  </div>
+  <div class="form-group">
+    <label>Stat 4 — Chiffre</label>
+    <input type="text" id="STAT4_NUM" placeholder="Devis">
+  </div>
+  <div class="form-group">
+    <label>Stat 4 — Label</label>
+    <input type="text" id="STAT4_LABEL" placeholder="Gratuit sur place">
+  </div>
+
+  <div class="section-title">🔧 Services (6 services)</div>
+
+  <div class="form-group">
+    <label>Service 1 — Icône</label>
+    <input type="text" id="SERVICE1_ICON" placeholder="💧">
+  </div>
+  <div class="form-group">
+    <label>Service 1 — Nom</label>
+    <input type="text" id="SERVICE1_NOM" placeholder="Fuite d'eau">
+  </div>
+  <div class="form-group full">
+    <label>Service 1 — Description</label>
+    <input type="text" id="SERVICE1_DESC" placeholder="Intervention rapide, réparation joint et installation">
+  </div>
+
+  <div class="form-group">
+    <label>Service 2 — Icône</label>
+    <input type="text" id="SERVICE2_ICON" placeholder="🚿">
+  </div>
+  <div class="form-group">
+    <label>Service 2 — Nom</label>
+    <input type="text" id="SERVICE2_NOM" placeholder="Robinetterie">
+  </div>
+  <div class="form-group full">
+    <label>Service 2 — Description</label>
+    <input type="text" id="SERVICE2_DESC" placeholder="Réparation et remplacement robinets, mitigeurs">
+  </div>
+
+  <div class="form-group">
+    <label>Service 3 — Icône</label>
+    <input type="text" id="SERVICE3_ICON" placeholder="🛁">
+  </div>
+  <div class="form-group">
+    <label>Service 3 — Nom</label>
+    <input type="text" id="SERVICE3_NOM" placeholder="Sanitaire">
+  </div>
+  <div class="form-group full">
+    <label>Service 3 — Description</label>
+    <input type="text" id="SERVICE3_DESC" placeholder="Lavabo, toilette, évier — pose et remplacement">
+  </div>
+
+  <div class="form-group">
+    <label>Service 4 — Icône</label>
+    <input type="text" id="SERVICE4_ICON" placeholder="🔥">
+  </div>
+  <div class="form-group">
+    <label>Service 4 — Nom</label>
+    <input type="text" id="SERVICE4_NOM" placeholder="Ballon eau chaude">
+  </div>
+  <div class="form-group full">
+    <label>Service 4 — Description</label>
+    <input type="text" id="SERVICE4_DESC" placeholder="Installation, entretien et remplacement">
+  </div>
+
+  <div class="form-group">
+    <label>Service 5 — Icône</label>
+    <input type="text" id="SERVICE5_ICON" placeholder="🪠">
+  </div>
+  <div class="form-group">
+    <label>Service 5 — Nom</label>
+    <input type="text" id="SERVICE5_NOM" placeholder="Dégorgement">
+  </div>
+  <div class="form-group full">
+    <label>Service 5 — Description</label>
+    <input type="text" id="SERVICE5_DESC" placeholder="Lavabo, douche, baignoire bouchés">
+  </div>
+
+  <div class="form-group">
+    <label>Service 6 — Icône</label>
+    <input type="text" id="SERVICE6_ICON" placeholder="🔨">
+  </div>
+  <div class="form-group">
+    <label>Service 6 — Nom</label>
+    <input type="text" id="SERVICE6_NOM" placeholder="Rénovation">
+  </div>
+  <div class="form-group full">
+    <label>Service 6 — Description</label>
+    <input type="text" id="SERVICE6_DESC" placeholder="Appartement, bureau, cuisine — de A à Z">
+  </div>
+
+  <div class="section-title">⭐ Avis clients (3 avis)</div>
+
+  <div class="form-group full">
+    <label>Avis 1 — Texte</label>
+    <textarea id="AVIS1_TEXTE" placeholder="Intervention le soir même, diagnostic rapide, prix honnête..."></textarea>
+  </div>
+  <div class="form-group full">
+    <label>Avis 1 — Auteur</label>
+    <input type="text" id="AVIS1_AUTEUR" placeholder="Jean-Louis M. · Paris 18ème">
+  </div>
+  <div class="form-group full">
+    <label>Avis 2 — Texte</label>
+    <textarea id="AVIS2_TEXTE" placeholder="Travail très soigné, équipe ponctuelle..."></textarea>
+  </div>
+  <div class="form-group full">
+    <label>Avis 2 — Auteur</label>
+    <input type="text" id="AVIS2_AUTEUR" placeholder="Sophie C. · Montmartre">
+  </div>
+  <div class="form-group full">
+    <label>Avis 3 — Texte</label>
+    <textarea id="AVIS3_TEXTE" placeholder="Entreprise sérieuse, on sent que c'est une affaire de famille..."></textarea>
+  </div>
+  <div class="form-group full">
+    <label>Avis 3 — Auteur</label>
+    <input type="text" id="AVIS3_AUTEUR" placeholder="Pierre B. · Clignancourt">
+  </div>
+
+  <div class="form-group full">
+    <label>Description contact</label>
+    <textarea id="CONTACT_DESC" placeholder="Pour toute demande de devis, dépannage ou question..."></textarea>
+  </div>
+  <div class="form-group full">
+    <label>Intro services</label>
+    <input type="text" id="SERVICES_INTRO" placeholder="De la simple fuite à la rénovation complète — un seul numéro suffit">
+  </div>
+
+  <button class="btn-generate" onclick="generer()">⚡ Générer le site</button>
+  <button class="btn-download" id="btn-download" onclick="telecharger()">⬇️ Télécharger index.html</button>
+  <div class="success" id="success">✅ Site généré ! Clique sur télécharger pour récupérer le fichier.</div>
+
+</div>
+
+<script>
+let htmlGenere = '';
+
+async function generer() {
+  // Récupérer le template
+  const response = await fetch('../templates/artisan-base.html');
+  let template = await response.text();
+
+  // Récupérer toutes les valeurs du formulaire
+  const champs = [
+    'NOM_ENTREPRISE','METIER','VILLE','TELEPHONE','EMAIL','ADRESSE',
+    'EXPERIENCE','SIRET','SLOGAN_COURT','SLOGAN_LONG','DESCRIPTION',
+    'BADGE_URGENCE','URGENCE_TEXTE','STAT1_NUM','STAT1_LABEL',
+    'STAT2_NUM','STAT2_LABEL','STAT3_NUM','STAT3_LABEL','STAT4_NUM','STAT4_LABEL',
+    'SERVICE1_ICON','SERVICE1_NOM','SERVICE1_DESC',
+    'SERVICE2_ICON','SERVICE2_NOM','SERVICE2_DESC',
+    'SERVICE3_ICON','SERVICE3_NOM','SERVICE3_DESC',
+    'SERVICE4_ICON','SERVICE4_NOM','SERVICE4_DESC',
+    'SERVICE5_ICON','SERVICE5_NOM','SERVICE5_DESC',
+    'SERVICE6_ICON','SERVICE6_NOM','SERVICE6_DESC',
+    'AVIS1_TEXTE','AVIS1_AUTEUR','AVIS2_TEXTE','AVIS2_AUTEUR',
+    'AVIS3_TEXTE','AVIS3_AUTEUR','CONTACT_DESC','SERVICES_INTRO'
+  ];
+
+  champs.forEach(champ => {
+    const el = document.getElementById(champ);
+    const valeur = el ? el.value || el.placeholder : '';
+    const regex = new RegExp(`{{${champ}}}`, 'g');
+    template = template.replace(regex, valeur);
+  });
+
+  htmlGenere = template;
+
+  // Afficher les boutons succès
+  document.getElementById('btn-download').style.display = 'block';
+  document.getElementById('success').style.display = 'block';
+}
+
+function telecharger() {
+  const blob = new Blob([htmlGenere], {type: 'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'index.html';
+  a.click();
+}
+</script>
+
+</body>
+</html>
