@@ -8,8 +8,6 @@
 body{font-family:Arial,sans-serif;background:#f0f4f8;padding:2rem}
 h1{color:#1A5276;margin-bottom:0.3rem;font-size:1.5rem}
 .subtitle{color:#5D6D7E;font-size:0.85rem;margin-bottom:1.5rem}
-
-/* IA ZONE */
 .ia-zone{background:linear-gradient(135deg,#1A5276,#2E86C1);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;color:white}
 .ia-zone h2{font-size:1rem;margin-bottom:0.3rem}
 .ia-zone p{font-size:0.78rem;opacity:0.8;margin-bottom:1rem}
@@ -19,21 +17,14 @@ h1{color:#1A5276;margin-bottom:0.3rem;font-size:1.5rem}
 .ia-group input{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:0.65rem 0.8rem;color:white;font-size:0.9rem;font-family:Arial,sans-serif;outline:none}
 .ia-group input::placeholder{color:rgba(255,255,255,0.5)}
 .ia-group input:focus{border-color:white;background:rgba(255,255,255,0.2)}
-.btn-ia{background:#F0C27F;color:#1A5276;border:none;padding:0.65rem 1.3rem;border-radius:6px;font-size:0.88rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s}
-.btn-ia:hover{background:#e6b86a}
-.btn-ia:disabled{opacity:0.6;cursor:not-allowed}
-.ia-loading{display:none;margin-top:0.8rem;font-size:0.82rem;opacity:0.8;align-items:center;gap:0.5rem}
-.ia-loading.show{display:flex}
-.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0}
-@keyframes spin{to{transform:rotate(360deg)}}
-.ia-success{display:none;margin-top:0.8rem;background:rgba(255,255,255,0.15);border-radius:6px;padding:0.6rem 0.8rem;font-size:0.78rem}
+.btn-ia{background:#F0C27F;color:#1A5276;border:none;padding:0.65rem 1.3rem;border-radius:6px;font-size:0.88rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.ia-success{display:none;margin-top:0.8rem;background:rgba(255,255,255,0.15);border-radius:6px;padding:0.8rem;font-size:0.82rem}
 .ia-success.show{display:block}
-
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:900px}
 .form-group{display:flex;flex-direction:column;gap:0.4rem}
 .form-group.full{grid-column:1/-1}
 label{font-size:0.78rem;font-weight:600;color:#1A5276;text-transform:uppercase;letter-spacing:0.05em}
-input,textarea{padding:0.7rem;border:1.5px solid #D5E8F5;border-radius:6px;font-size:0.9rem;font-family:Arial,sans-serif;outline:none;transition:border-color 0.2s}
+input,textarea{padding:0.7rem;border:1.5px solid #D5E8F5;border-radius:6px;font-size:0.9rem;font-family:Arial,sans-serif;outline:none}
 input:focus,textarea:focus{border-color:#2E86C1}
 textarea{min-height:80px;resize:vertical}
 .section-title{grid-column:1/-1;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#85C1E9;background:#1A5276;padding:0.5rem 0.8rem;border-radius:4px;margin-top:0.5rem}
@@ -53,26 +44,21 @@ textarea{min-height:80px;resize:vertical}
 <h1>⚡ Générateur de sites artisans</h1>
 <p class="subtitle">Utilise l'IA pour remplir automatiquement ou remplis manuellement</p>
 
-<!-- ZONE IA -->
 <div class="ia-zone">
   <h2>🤖 Remplissage automatique par IA</h2>
-  <p>Tape le métier et la ville — l'IA remplit tout le formulaire en quelques secondes</p>
+  <p>Tape le métier et la ville — copie le prompt — colle dans Claude ou ChatGPT — colle le JSON ici</p>
   <div class="ia-row">
     <div class="ia-group">
       <label>Métier</label>
-      <input type="text" id="ia-metier" placeholder="Plombier, Électricien, Garagiste...">
+      <input type="text" id="ia-metier" placeholder="Plombier, Électricien...">
     </div>
     <div class="ia-group">
       <label>Ville</label>
-      <input type="text" id="ia-ville" placeholder="Paris, Lyon, Marseille...">
+      <input type="text" id="ia-ville" placeholder="Paris, Lyon...">
     </div>
-    <button class="btn-ia" onclick="remplirAvecIA()">🤖 Remplir avec l'IA</button>
+    <button class="btn-ia" onclick="remplirAvecIA()">📋 Copier le prompt</button>
   </div>
-  <div class="ia-loading" id="ia-loading">
-    <div class="spinner"></div>
-    L'IA génère le contenu pour votre artisan...
-  </div>
-  <div class="ia-success" id="ia-success">✅ Formulaire rempli ! Vérifie les infos et clique sur "Générer le site"</div>
+  <div class="ia-success" id="ia-success"></div>
 </div>
 
 <div class="form-grid">
@@ -125,7 +111,7 @@ textarea{min-height:80px;resize:vertical}
 
   <div class="section-title">⭐ 3 avis clients</div>
   <div class="form-group full"><label>Avis 1 — Texte</label><textarea id="AVIS1_TEXTE" placeholder="Intervention le soir même, prix honnête..."></textarea></div>
-  <div class="form-group full"><label>Avis 1 — Auteur</label><input type="text" id="AVIS1_AUTEUR" placeholder="Jean-Louis M. · Paris 18ème"></div>
+  <div class="form-group full"><label>Avis 1 — Auteur</label><input type="text" id="AVIS1_AUTEUR" placeholder="Jean-Louis M."></div>
   <div class="form-group full"><label>Avis 2 — Texte</label><textarea id="AVIS2_TEXTE" placeholder="Travail très soigné, équipe ponctuelle..."></textarea></div>
   <div class="form-group full"><label>Avis 2 — Auteur</label><input type="text" id="AVIS2_AUTEUR" placeholder="Sophie C."></div>
   <div class="form-group full"><label>Avis 3 — Texte</label><textarea id="AVIS3_TEXTE" placeholder="Entreprise sérieuse, affaire de famille..."></textarea></div>
@@ -135,9 +121,9 @@ textarea{min-height:80px;resize:vertical}
 
   <button class="btn-generate" onclick="generer()">⚡ Générer le site</button>
   <button class="btn-action btn-dl" id="btn-dl" onclick="telecharger()">⬇️ Télécharger</button>
-  <button class="btn-action btn-copy" id="btn-copy" onclick="copierCode()">📋 Copier le code — coller dans github.dev</button>
-  <div class="copy-msg" id="copy-msg">✅ Code copié ! Va dans github.dev et colle avec Ctrl+V</div>
-  <div class="success" id="success">✅ Site généré avec succès !</div>
+  <button class="btn-action btn-copy" id="btn-copy" onclick="copierCode()">📋 Copier le code</button>
+  <div class="copy-msg" id="copy-msg">✅ Code copié !</div>
+  <div class="success" id="success">✅ Site généré !</div>
   <div class="zone-code" id="zone-code">
     <label>💻 Code généré</label>
     <textarea id="code-output" readonly></textarea>
@@ -147,23 +133,17 @@ textarea{min-height:80px;resize:vertical}
 <script>
 let htmlGenere = '';
 
-// ═══════════════════════════════
-// REMPLISSAGE IA
-// ═══════════════════════════════
-async function remplirAvecIA() {
+function remplirAvecIA() {
   const metier = document.getElementById('ia-metier').value.trim();
   const ville = document.getElementById('ia-ville').value.trim();
-  
   if(!metier || !ville) { alert('Tape le métier et la ville !'); return; }
 
-  const prompt = `Tu es un expert en marketing pour artisans. Génère le contenu d'un site web pour un ${metier} à ${ville}.
-
-Réponds UNIQUEMENT en JSON valide sans texte avant ou après :
+  const prompt = `Tu es un expert en marketing pour artisans. Génère le contenu d'un site web pour un ${metier} à ${ville}. Réponds UNIQUEMENT en JSON valide sans texte avant ou après :
 {
-  "NOM_ENTREPRISE": "nom accrocheur",
+  "NOM_ENTREPRISE": "nom accrocheur et professionnel",
   "SLOGAN_COURT": "slogan 5 mots max",
   "SLOGAN_LONG": "phrase d'accroche 10 mots max",
-  "DESCRIPTION": "2 phrases professionnelles",
+  "DESCRIPTION": "2 phrases professionnelles et convaincantes",
   "BADGE_URGENCE": "texte badge urgence court",
   "URGENCE_TEXTE": "texte bande urgence",
   "EXPERIENCE": "X ans d'expérience",
@@ -184,22 +164,23 @@ Réponds UNIQUEMENT en JSON valide sans texte avant ou après :
   "SERVICES_INTRO": "introduction aux services"
 }`;
 
-  // Copier le prompt
-  navigator.clipboard.writeText(prompt).catch(() => {
+  try {
+    navigator.clipboard.writeText(prompt);
+  } catch(e) {
     const ta = document.createElement('textarea');
     ta.value = prompt;
     document.body.appendChild(ta);
     ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
-  });
+  }
 
-  document.getElementById('ia-success').classList.add('show');
-  document.getElementById('ia-success').innerHTML = `
-    ✅ Prompt copié ! <strong>Colle-le dans Claude.ai</strong> → copie le JSON → colle-le dans la zone ci-dessous
-    <br><br>
-    <textarea id="json-input" style="width:100%;height:80px;margin-top:0.5rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:0.5rem;color:white;font-size:0.75rem;font-family:monospace" placeholder="Colle le JSON de Claude ici..."></textarea>
-    <button onclick="appliquerJSON()" style="margin-top:0.5rem;background:#F0C27F;color:#1A5276;border:none;padding:0.5rem 1rem;border-radius:5px;font-weight:700;cursor:pointer">✅ Appliquer</button>
+  const zone = document.getElementById('ia-success');
+  zone.classList.add('show');
+  zone.innerHTML = `
+    ✅ Prompt copié ! <strong>Colle-le dans Claude.ai ou ChatGPT</strong> → copie le JSON → colle-le ici :<br><br>
+    <textarea id="json-input" style="width:100%;height:100px;margin-top:0.5rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:0.5rem;color:white;font-size:0.75rem;font-family:monospace" placeholder='Colle le JSON ici...'></textarea>
+    <button onclick="appliquerJSON()" style="margin-top:0.5rem;background:#F0C27F;color:#1A5276;border:none;padding:0.5rem 1rem;border-radius:5px;font-weight:700;cursor:pointer">✅ Appliquer au formulaire</button>
   `;
 }
 
@@ -207,7 +188,6 @@ function appliquerJSON() {
   try {
     const texte = document.getElementById('json-input').value.trim();
     const json = JSON.parse(texte);
-    
     const metier = document.getElementById('ia-metier').value.trim();
     const ville = document.getElementById('ia-ville').value.trim();
     json.METIER = metier;
@@ -216,25 +196,19 @@ function appliquerJSON() {
     if(!json.EMAIL) json.EMAIL = 'contact@entreprise.fr';
     if(!json.ADRESSE) json.ADRESSE = ville;
     if(!json.SIRET) json.SIRET = '';
-
     Object.keys(json).forEach(key => {
       const el = document.getElementById(key);
       if(el) el.value = json[key];
     });
-
-    alert('✅ Formulaire rempli avec succès !');
+    alert('✅ Formulaire rempli !');
   } catch(e) {
-    alert('❌ JSON invalide — assure-toi de copier uniquement le JSON de Claude');
+    alert('❌ JSON invalide — copie uniquement le JSON de Claude');
   }
 }
 
-// ═══════════════════════════════
-// GÉNÉRATION DU SITE
-// ═══════════════════════════════
 async function generer() {
   const response = await fetch('../artisan-base.html');
   let template = await response.text();
-
   const champs = [
     'NOM_ENTREPRISE','METIER','VILLE','TELEPHONE','EMAIL','ADRESSE',
     'EXPERIENCE','SIRET','SLOGAN_COURT','SLOGAN_LONG','DESCRIPTION',
@@ -249,14 +223,12 @@ async function generer() {
     'AVIS1_TEXTE','AVIS1_AUTEUR','AVIS2_TEXTE','AVIS2_AUTEUR',
     'AVIS3_TEXTE','AVIS3_AUTEUR','CONTACT_DESC','SERVICES_INTRO'
   ];
-
   champs.forEach(champ => {
     const el = document.getElementById(champ);
     const valeur = el ? (el.value || el.placeholder) : '';
     const regex = new RegExp(`{{${champ}}}`, 'g');
     template = template.replace(regex, valeur);
   });
-
   htmlGenere = template;
   document.getElementById('btn-dl').style.display = 'block';
   document.getElementById('btn-copy').style.display = 'block';
