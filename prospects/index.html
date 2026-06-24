@@ -176,27 +176,60 @@ function supprimerProspect(id) {
 function genererMessage(id) {
   const p = prospects.find(x => x.id === id);
   if(!p) return;
-  
+
+  const metier = p.metier.toLowerCase();
+  const demoUrl = `nanda-web-designer.github.io/Systeme-auro/clients/demo-${metier}/`;
+
+  let accrocheMetier = '';
+  let exempleClient = '';
+
+  if(metier.includes('plomb')) {
+    accrocheMetier = `Quand une canalisation lâche à 22h, le client ouvre Google et appelle le premier plombier qu'il trouve. Sans site, ce n'est pas vous.`;
+    exempleClient = `Par exemple, si vous m'envoyez vos photos de chantiers, j'ajoute une page "Nos réalisations". Si vous avez des avis Google, je les intègre directement.`;
+  } else if(metier.includes('electr')) {
+    accrocheMetier = `Avant de laisser un électricien intervenir chez eux, vos clients vérifient sur Google. Vos concurrents sont déjà en ligne — vous perdez des chantiers tous les jours.`;
+    exempleClient = `Par exemple, j'intègre vos certifications, vos avis Google et une page "Nos interventions" avec vos photos.`;
+  } else if(metier.includes('garag') || metier.includes('mécano') || metier.includes('mecano')) {
+    accrocheMetier = `Les gens cherchent "garage proche de moi" sur Google avant d'y aller. Sans site, votre garage est invisible — même si vous êtes le meilleur du quartier.`;
+    exempleClient = `Par exemple, j'intègre vos services, vos horaires et un bouton "Prendre RDV" directement sur le site.`;
+  } else if(metier.includes('coiff')) {
+    accrocheMetier = `Avant d'essayer un nouveau coiffeur, les gens vérifient sur Instagram ou Google. Vos avis sont excellents — dommage qu'ils soient si difficiles à trouver.`;
+    exempleClient = `Par exemple, si vous m'envoyez des photos de coupes, j'ajoute une galerie "Nos réalisations". Les possibilités sont infinies.`;
+  } else if(metier.includes('peintre') || metier.includes('peintur')) {
+    accrocheMetier = `Dans votre métier, une photo vaut mille mots. Vos clients cherchent des exemples de réalisations avant de vous appeler — sans site, ils appellent quelqu'un d'autre.`;
+    exempleClient = `Par exemple, envoyez-moi vos photos avant/après, j'en fais une galerie qui convainc en quelques secondes.`;
+  } else {
+    accrocheMetier = `À notre époque, les gens vérifient sur internet avant de faire appel à un nouveau prestataire. Vos concurrents apparaissent avant vous sur Google — vous perdez des clients potentiels tous les jours.`;
+    exempleClient = `Par exemple, si vous m'envoyez des photos de vos réalisations, j'ajoute une page dédiée. Les possibilités sont infinies.`;
+  }
+
   const msg = `Bonjour,
 
-Je suis tombé sur votre entreprise ${p.nom} et j'ai remarqué que vous n'aviez pas encore de site web.
+J'ai remarqué que ${p.nom} n'avait pas encore de site web — étonnant vu la qualité de votre travail.
 
-En tant que web designer spécialisé dans les artisans, j'ai créé une démo gratuite de ce que pourrait être votre site :
+${accrocheMetier}
 
-👉 nanda-web-designer.github.io/Systeme-auro/clients/demo-${p.metier.toLowerCase()}/
+Du coup, je l'ai créé pour vous. Votre site est déjà en ligne :
+👉 ${demoUrl}
 
-Ce site inclut :
-✅ Vos services mis en valeur
-✅ Vos coordonnées cliquables
-✅ Un formulaire de contact
-✅ Optimisé mobile
+✅ Vos infos & coordonnées intégrées
+✅ Référencement Google local optimisé
+✅ 100% mobile + desktop
+✅ Formulaire de contact intégré
+✅ Mise en ligne définitive rapide
 
-Je peux l'adapter à votre image en 48h pour seulement 350€ (site livré, hébergement inclus 1 an).
+150€ tout compris — domaine + hébergement illimité inclus.
 
-Intéressé(e) ? Je reste disponible pour en discuter.
+Vous voulez le garder ? Répondez simplement à ce message et dites-moi les retouches souhaitées.
+${exempleClient}
+
+Pas intéressé(e) ? Je le supprime dans 48h.
 
 Cordialement,
-Nanda Web Designer`;
+Nanda Web Designer
+📱 [votre numéro]
+
+P.S. : Vos concurrents apparaissent avant vous sur Google et vous perdez des clients potentiels chaque jour. Ce site règle ça dès demain.`;
 
   document.getElementById('modal-msg').value = msg;
   document.getElementById('modal').classList.add('open');
