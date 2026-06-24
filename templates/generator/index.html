@@ -154,103 +154,78 @@ async function remplirAvecIA() {
   const metier = document.getElementById('ia-metier').value.trim();
   const ville = document.getElementById('ia-ville').value.trim();
   
-  if(!metier || !ville) {
-    alert('Tape le métier et la ville !');
-    return;
-  }
+  if(!metier || !ville) { alert('Tape le métier et la ville !'); return; }
 
-  const btn = document.querySelector('.btn-ia');
-  btn.disabled = true;
-  btn.textContent = '⏳ Génération...';
-  document.getElementById('ia-loading').classList.add('show');
-  document.getElementById('ia-success').classList.remove('show');
+  const prompt = `Tu es un expert en marketing pour artisans. Génère le contenu d'un site web pour un ${metier} à ${ville}.
 
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        messages: [{
-          role: 'user',
-          content: `Tu es un expert en marketing pour artisans. Génère le contenu d'un site web pour un ${metier} à ${ville}.
-
-Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, avec exactement ces champs :
+Réponds UNIQUEMENT en JSON valide sans texte avant ou après :
 {
-  "NOM_ENTREPRISE": "nom accrocheur et professionnel",
-  "SLOGAN_COURT": "slogan court et mémorable (5 mots max)",
-  "SLOGAN_LONG": "phrase d'accroche inspirante (10 mots max)",
-  "DESCRIPTION": "description de 2 phrases professionnelle et convaincante",
-  "BADGE_URGENCE": "texte court badge urgence",
-  "URGENCE_TEXTE": "texte bande urgence en bas du hero",
-  "EXPERIENCE": "ex: 15 ans d'expérience",
-  "STAT1_NUM": "chiffre clé 1",
-  "STAT1_LABEL": "label stat 1",
-  "STAT2_NUM": "chiffre clé 2",
-  "STAT2_LABEL": "label stat 2",
-  "STAT3_NUM": "chiffre clé 3",
-  "STAT3_LABEL": "label stat 3",
-  "STAT4_NUM": "chiffre clé 4",
-  "STAT4_LABEL": "label stat 4",
-  "SERVICE1_ICON": "emoji",
-  "SERVICE1_NOM": "nom service 1",
-  "SERVICE1_DESC": "description courte service 1",
-  "SERVICE2_ICON": "emoji",
-  "SERVICE2_NOM": "nom service 2",
-  "SERVICE2_DESC": "description courte service 2",
-  "SERVICE3_ICON": "emoji",
-  "SERVICE3_NOM": "nom service 3",
-  "SERVICE3_DESC": "description courte service 3",
-  "SERVICE4_ICON": "emoji",
-  "SERVICE4_NOM": "nom service 4",
-  "SERVICE4_DESC": "description courte service 4",
-  "SERVICE5_ICON": "emoji",
-  "SERVICE5_NOM": "nom service 5",
-  "SERVICE5_DESC": "description courte service 5",
-  "SERVICE6_ICON": "emoji",
-  "SERVICE6_NOM": "nom service 6",
-  "SERVICE6_DESC": "description courte service 6",
-  "AVIS1_TEXTE": "avis client réaliste et convaincant",
-  "AVIS1_AUTEUR": "Prénom N. · ${ville}",
-  "AVIS2_TEXTE": "avis client réaliste et convaincant",
-  "AVIS2_AUTEUR": "Prénom N. · ${ville}",
-  "AVIS3_TEXTE": "avis client réaliste et convaincant",
-  "AVIS3_AUTEUR": "Prénom N. · ${ville}",
-  "CONTACT_DESC": "phrase d'invitation au contact",
-  "SERVICES_INTRO": "phrase d'introduction aux services"
-}`
-        }]
-      })
-    });
+  "NOM_ENTREPRISE": "nom accrocheur",
+  "SLOGAN_COURT": "slogan 5 mots max",
+  "SLOGAN_LONG": "phrase d'accroche 10 mots max",
+  "DESCRIPTION": "2 phrases professionnelles",
+  "BADGE_URGENCE": "texte badge urgence court",
+  "URGENCE_TEXTE": "texte bande urgence",
+  "EXPERIENCE": "X ans d'expérience",
+  "STAT1_NUM": "chiffre","STAT1_LABEL": "label",
+  "STAT2_NUM": "chiffre","STAT2_LABEL": "label",
+  "STAT3_NUM": "chiffre","STAT3_LABEL": "label",
+  "STAT4_NUM": "chiffre","STAT4_LABEL": "label",
+  "SERVICE1_ICON": "emoji","SERVICE1_NOM": "nom","SERVICE1_DESC": "description courte",
+  "SERVICE2_ICON": "emoji","SERVICE2_NOM": "nom","SERVICE2_DESC": "description courte",
+  "SERVICE3_ICON": "emoji","SERVICE3_NOM": "nom","SERVICE3_DESC": "description courte",
+  "SERVICE4_ICON": "emoji","SERVICE4_NOM": "nom","SERVICE4_DESC": "description courte",
+  "SERVICE5_ICON": "emoji","SERVICE5_NOM": "nom","SERVICE5_DESC": "description courte",
+  "SERVICE6_ICON": "emoji","SERVICE6_NOM": "nom","SERVICE6_DESC": "description courte",
+  "AVIS1_TEXTE": "avis réaliste","AVIS1_AUTEUR": "Prénom N. · ${ville}",
+  "AVIS2_TEXTE": "avis réaliste","AVIS2_AUTEUR": "Prénom N. · ${ville}",
+  "AVIS3_TEXTE": "avis réaliste","AVIS3_AUTEUR": "Prénom N. · ${ville}",
+  "CONTACT_DESC": "invitation au contact",
+  "SERVICES_INTRO": "introduction aux services"
+}`;
 
-    const data = await response.json();
-    const texte = data.content[0].text;
+  // Copier le prompt
+  navigator.clipboard.writeText(prompt).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = prompt;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+
+  document.getElementById('ia-success').classList.add('show');
+  document.getElementById('ia-success').innerHTML = `
+    ✅ Prompt copié ! <strong>Colle-le dans Claude.ai</strong> → copie le JSON → colle-le dans la zone ci-dessous
+    <br><br>
+    <textarea id="json-input" style="width:100%;height:80px;margin-top:0.5rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);border-radius:6px;padding:0.5rem;color:white;font-size:0.75rem;font-family:monospace" placeholder="Colle le JSON de Claude ici..."></textarea>
+    <button onclick="appliquerJSON()" style="margin-top:0.5rem;background:#F0C27F;color:#1A5276;border:none;padding:0.5rem 1rem;border-radius:5px;font-weight:700;cursor:pointer">✅ Appliquer</button>
+  `;
+}
+
+function appliquerJSON() {
+  try {
+    const texte = document.getElementById('json-input').value.trim();
     const json = JSON.parse(texte);
-
-    // Remplir le formulaire
+    
+    const metier = document.getElementById('ia-metier').value.trim();
+    const ville = document.getElementById('ia-ville').value.trim();
     json.METIER = metier;
     json.VILLE = ville;
-    json.TELEPHONE = '01.XX.XX.XX.XX';
-    json.EMAIL = `contact@${metier.toLowerCase().replace(/\s/g,'-')}-${ville.toLowerCase().replace(/\s/g,'-')}.fr`;
-    json.ADRESSE = `${ville}`;
-    json.SIRET = '';
+    if(!json.TELEPHONE) json.TELEPHONE = '01.XX.XX.XX.XX';
+    if(!json.EMAIL) json.EMAIL = 'contact@entreprise.fr';
+    if(!json.ADRESSE) json.ADRESSE = ville;
+    if(!json.SIRET) json.SIRET = '';
 
     Object.keys(json).forEach(key => {
       const el = document.getElementById(key);
       if(el) el.value = json[key];
     });
 
-    document.getElementById('ia-success').classList.add('show');
-
-  } catch(err) {
-    alert('Erreur IA — remplis le formulaire manuellement. (Détail: ' + err.message + ')');
-    console.error(err);
+    alert('✅ Formulaire rempli avec succès !');
+  } catch(e) {
+    alert('❌ JSON invalide — assure-toi de copier uniquement le JSON de Claude');
   }
-
-  btn.disabled = false;
-  btn.textContent = '🤖 Remplir avec l\'IA';
-  document.getElementById('ia-loading').classList.remove('show');
 }
 
 // ═══════════════════════════════
