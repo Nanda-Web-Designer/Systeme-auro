@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plomberie Parisienne – plombier Paris</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* COULEURS PAR MÉTIER */
+:root{
+  --primary:#1A5276;
+  --primary-dark:#154360;
+  --primary-mid:#2E86C1;
+  --primary-light:#85C1E9;
+  --primary-pale:#D6EAF8;
+  --accent:#F0C27F;
+  --cream:#FBF8F3;
+  --sand:#F5E6C8;
+  --text:#1C2833;
+  --muted:#5D6D7E;
+  --border:#D5E8F5;
+}
+
+/* Plombier → Bleu (défaut) */
+body.metier-plombier{--primary:#1A5276;--primary-dark:#154360;--primary-mid:#2E86C1;--primary-light:#85C1E9;--primary-pale:#D6EAF8;--accent:#F0C27F;--border:#D5E8F5}
+/* Électricien → Jaune/Anthracite */
+body.metier-electricien{--primary:#1C1C1E;--primary-dark:#000000;--primary-mid:#F4D03F;--primary-light:#F7DC6F;--primary-pale:#FEF9E7;--accent:#F4D03F;--border:#FDEBD0}
+/* Jardinier → Vert sauge */
+body.metier-jardinier{--primary:#1E8449;--primary-dark:#145A32;--primary-mid:#27AE60;--primary-light:#82E0AA;--primary-pale:#D5F5E3;--accent:#A9DFBF;--border:#D5F5E3}
+/* Menuisier → Brun bois */
+body.metier-menuisier{--primary:#6E2C0E;--primary-dark:#4A1A0A;--primary-mid:#A04000;--primary-light:#D35400;--primary-pale:#FAE5D3;--accent:#E59866;--border:#FAD7A0}
+/* Peintre → Gris perle */
+body.metier-peintre{--primary:#2C3E50;--primary-dark:#1A252F;--primary-mid:#5D6D7E;--primary-light:#AEB6BF;--primary-pale:#F2F3F4;--accent:#D5D8DC;--border:#EAECEE}
+/* Garagiste → Gris acier/Orange */
+body.metier-garagiste{--primary:#212F3C;--primary-dark:#17202A;--primary-mid:#E67E22;--primary-light:#F0B27A;--primary-pale:#FDEBD0;--accent:#E67E22;--border:#FAD7A0}
+/* Maçon → Terre cuite */
+body.metier-macon{--primary:#784212;--primary-dark:#4A235A;--primary-mid:#A04000;--primary-light:#CA6F1E;--primary-pale:#FAE5D3;--accent:#DC7633;--border:#FAD7A0}
+
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;scroll-behavior:smooth}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 2.5rem;background:var(--primary);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--primary-light)}
+.logo-nav{text-decoration:none}
+.logo-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:white;display:block;line-height:1.1}
+.logo-sub{font-size:0.6rem;color:var(--primary-light);letter-spacing:0.1em;text-transform:uppercase}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,0.55);font-size:0.75rem;padding:0.4rem 0.8rem;border-radius:4px;transition:all 0.2s}
+.nav-links a:hover{color:var(--sand);background:rgba(255,255,255,0.07)}
+.nav-tel{background:var(--accent);color:var(--primary);padding:0.5rem 1rem;border-radius:4px;font-size:0.78rem;font-weight:700;text-decoration:none}
+
+/* MOBILE BAR */
+.mobile-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--primary);border-top:2px solid var(--primary-light);padding:0.75rem 1rem}
+.mobile-bar a{display:flex;align-items:center;justify-content:center;padding:0.85rem;border-radius:6px;background:var(--accent);color:var(--primary);font-weight:700;font-size:0.95rem;text-decoration:none;width:100%}
+@media(max-width:768px){.mobile-bar{display:block}body{padding-bottom:70px}.nav-links{display:none}nav{padding:1rem}}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,var(--primary) 0%,var(--primary-mid) 100%);min-height:88vh;display:flex;align-items:center;padding:4rem 2.5rem 6rem;position:relative;overflow:hidden}
+.hero-deco{position:absolute;inset:0;pointer-events:none}
+.hero-deco-c1{position:absolute;width:500px;height:500px;border-radius:50%;background:rgba(255,255,255,0.03);top:-200px;right:-100px}
+.hero-deco-c2{position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.02);bottom:-100px;left:-80px}
+.hero-inner{max-width:950px;margin:0 auto;width:100%;position:relative;z-index:1;display:grid;grid-template-columns:1.3fr 0.7fr;gap:4rem;align-items:center}
+.hero-eyebrow{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--primary-light);margin-bottom:1rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:400;color:white;line-height:1.1;margin-bottom:0.8rem}
+.hero h1 em{color:var(--accent);font-style:italic}
+.hero-slogan{font-family:'Playfair Display',serif;font-size:1.5rem;font-style:italic;color:var(--sand);margin-bottom:1.5rem;padding:0.8rem 1.2rem;border-left:3px solid var(--accent);background:rgba(255,255,255,0.05);border-radius:0 6px 6px 0;line-height:1.3}
+.hero-badge{display:inline-flex;align-items:center;gap:0.6rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:0.5rem 1rem;font-size:0.78rem;font-weight:500;color:var(--sand);margin-bottom:1.2rem}
+.hero-badge .dot{width:7px;height:7px;background:#4CAF50;border-radius:50%;flex-shrink:0}
+.hero-desc{font-size:0.9rem;color:rgba(255,255,255,0.6);line-height:1.9;margin-bottom:2rem;font-weight:300;max-width:480px}
+.hero-btns{display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:2rem}
+.btn-accent{background:var(--accent);color:var(--primary);padding:0.9rem 1.8rem;border-radius:4px;font-weight:700;text-decoration:none;font-size:0.88rem;transition:all 0.2s;display:inline-block}
+.btn-accent:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.2)}
+.btn-ghost{border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.8);padding:0.9rem 1.8rem;border-radius:4px;text-decoration:none;font-size:0.88rem;transition:all 0.2s;display:inline-block}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.06)}
+.hero-right{display:flex;flex-direction:column;gap:0.8rem}
+.hero-tel{display:flex;align-items:center;gap:0.8rem;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.9rem 1.1rem;text-decoration:none;transition:all 0.2s}
+.hero-tel:hover{background:rgba(255,255,255,0.12);transform:translateX(3px)}
+.tel-num{font-size:0.95rem;font-weight:700;color:var(--sand);display:block}
+.tel-tag{font-size:0.62rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.06em}
+.hero-mail{display:flex;align-items:center;gap:0.6rem;border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:0.7rem 1rem;text-decoration:none;transition:all 0.2s}
+.hero-mail:hover{border-color:rgba(255,255,255,0.2)}
+.hero-mail span{font-size:0.75rem;color:rgba(255,255,255,0.35)}
+
+/* URGENCE */
+.urgence-band{background:var(--accent);padding:1rem 2.5rem;display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap}
+.urgence-band p{color:var(--primary);font-weight:700;font-size:0.9rem}
+.urgence-band a{background:var(--primary);color:white;padding:0.55rem 1.3rem;border-radius:4px;font-weight:700;text-decoration:none;font-size:0.85rem}
+
+/* STATS */
+.stats-band{background:white;border-bottom:1px solid var(--border);padding:2.5rem 2rem}
+.stats-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:1rem}
+.stat-it{padding:0.5rem;border-right:1px solid var(--border)}
+.stat-it:last-child{border-right:none}
+.stat-big{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--primary-mid)}
+.stat-txt{font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-top:4px}
+
+/* SECTION COMMUNE */
+.section-label{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--primary-mid);margin-bottom:0.5rem}
+.section-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:400;color:var(--primary);margin-bottom:0.3rem}
+.section-sub{color:var(--muted);font-size:0.88rem;margin-bottom:0}
+.line{width:36px;height:2px;background:var(--primary-mid);margin:0.6rem 0 2rem;border-radius:2px}
+
+/* SERVICES */
+.services-section{padding:5rem 2.5rem;background:var(--cream)}
+.services-inner{max-width:1100px;margin:0 auto}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.srv-card{background:white;border:1px solid var(--border);border-radius:8px;padding:1.5rem;transition:all 0.3s;position:relative;overflow:hidden}
+.srv-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--primary-light));transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
+.srv-card:hover::after{transform:scaleX(1)}
+.srv-card:hover{border-color:var(--primary-mid);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.08)}
+.srv-icon{font-size:1.8rem;margin-bottom:0.8rem;display:block}
+.srv-card h3{font-size:0.9rem;font-weight:600;color:var(--primary);margin-bottom:0.4rem}
+.srv-card p{font-size:0.75rem;color:var(--muted);line-height:1.6}
+.urgent-badge{background:var(--primary-mid);color:white;font-size:0.55rem;font-weight:700;padding:0.12rem 0.45rem;border-radius:3px;text-transform:uppercase;margin-left:0.3rem;vertical-align:middle}
+
+/* HISTOIRE */
+.histoire-section{background:white;padding:5rem 2.5rem}
+.histoire-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.histoire-text h2{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:400;color:var(--primary);line-height:1.2;margin-bottom:1.5rem}
+.histoire-text h2 em{font-style:italic;color:var(--primary-mid)}
+.histoire-text p{font-size:0.88rem;color:var(--muted);line-height:2;margin-bottom:1rem;font-weight:300}
+.histoire-text p strong{color:var(--text);font-weight:500}
+.histoire-quote{background:var(--primary);border-radius:10px;padding:2.5rem;color:white;position:relative}
+.histoire-quote::before{content:'"';font-family:'Playfair Display',serif;font-size:5rem;color:var(--accent);opacity:0.3;position:absolute;top:-1rem;left:1.5rem;line-height:1}
+.histoire-quote blockquote{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--sand);line-height:1.8;position:relative;z-index:1}
+.histoire-quote cite{display:block;margin-top:1rem;font-size:0.75rem;color:rgba(255,255,255,0.4);font-style:normal;letter-spacing:0.08em;text-transform:uppercase}
+
+/* AVIS */
+.avis-section{background:var(--primary-pale);padding:5rem 2.5rem}
+.avis-inner{max-width:1100px;margin:0 auto}
+.avis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+.avis-card{background:white;border:1px solid var(--border);border-radius:10px;padding:1.5rem;transition:all 0.3s}
+.avis-card:hover{border-color:var(--primary-mid);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+.stars{color:var(--accent);font-size:0.9rem;margin-bottom:0.8rem;letter-spacing:2px}
+.avis-card blockquote{font-family:'Playfair Display',serif;font-size:0.88rem;font-style:italic;color:var(--muted);line-height:1.75;margin-bottom:1rem}
+.avis-author{font-size:0.75rem;font-weight:600;color:var(--primary)}
+
+/* CONTACT */
+.contact-section{background:white;padding:5rem 2.5rem}
+.contact-inner{max-width:1000px;margin:0 auto}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:2rem}
+.contact-infos{display:flex;flex-direction:column;gap:0.8rem}
+.c-btn{display:flex;align-items:center;gap:0.8rem;padding:1rem 1.2rem;border-radius:8px;text-decoration:none;transition:all 0.2s}
+.c-btn-main{background:var(--primary);color:white}
+.c-btn-main:hover{background:var(--primary-mid)}
+.c-btn-outline{border:1.5px solid var(--border);color:var(--muted)}
+.c-btn-outline:hover{border-color:var(--primary-mid);color:var(--primary)}
+.c-btn-icon{font-size:1.1rem}
+.c-btn-label{font-size:0.65rem;opacity:0.6;letter-spacing:0.06em;text-transform:uppercase;display:block}
+.c-btn-val{font-size:0.9rem;font-weight:600;display:block}
+
+/* FORMULAIRE */
+.contact-form{background:var(--primary-pale);border:1px solid var(--border);border-radius:12px;padding:2rem}
+.contact-form h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--primary);margin-bottom:1.5rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:0.8rem}
+.form-group{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:0.8rem}
+.form-group label{font-size:0.72rem;font-weight:500;color:var(--muted);letter-spacing:0.04em}
+.form-group input,.form-group select,.form-group textarea{padding:0.7rem 0.9rem;border:1.5px solid var(--border);border-radius:6px;font-size:0.85rem;font-family:'Inter',sans-serif;color:var(--text);background:white;outline:none;transition:border-color 0.2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary-mid)}
+.form-group textarea{min-height:90px;resize:vertical}
+.form-submit{width:100%;background:var(--primary);color:white;border:none;padding:0.9rem;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif}
+.form-submit:hover{background:var(--primary-mid)}
+.form-success{display:none;background:#E8F8F5;border:1px solid #A9DFBF;border-radius:6px;padding:0.8rem;font-size:0.82rem;color:#1E8449;text-align:center;margin-top:0.8rem}
+
+footer{background:var(--primary);padding:2rem 2.5rem;color:rgba(255,255,255,0.25)}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.75rem}
+footer strong{color:var(--sand)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{color:rgba(255,255,255,0.25);text-decoration:none;font-size:0.72rem}
+.footer-links a:hover{color:var(--sand)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .hero-inner,.histoire-inner,.contact-grid{grid-template-columns:1fr}
+  .hero h1{font-size:2.2rem}
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .avis-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body class="metier-plombier">
+
+<nav>
+  <a href="#" class="logo-nav">
+    <span class="logo-name">Plomberie Parisienne</span>
+    <span class="logo-sub">plombier · Paris</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#histoire">Notre histoire</a></li>
+    <li><a href="#avis">Avis</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:01.XX.XX.XX.XX" class="nav-tel">📞 01.XX.XX.XX.XX</a>
+</nav>
+
+<div class="mobile-bar">
+  <a href="tel:01.XX.XX.XX.XX">📞 Appeler — 01.XX.XX.XX.XX</a>
+</div>
+
+<div class="hero">
+  <div class="hero-deco">
+    <div class="hero-deco-c1"></div>
+    <div class="hero-deco-c2"></div>
+  </div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">plombier · Paris · 15 ans d'expérience</div>
+      <h1>Plomberie Parisienne<br><em>l'eau entre de bonnes mains</em></h1>
+      <div class="hero-slogan">Votre plombier de confiance à Paris depuis 15 ans</div>
+      <div class="hero-badge"><span class="dot"></span>Intervention rapide · Devis gratuit</div>
+      <p class="hero-desc">Dépannage urgent, installation et rénovation complète — nous intervenons dans tout Paris avec rapidité et professionnalisme. Devis gratuit sur place, prix transparents, satisfaction garantie.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-accent">Demander un devis gratuit</a>
+        <a href="#services" class="btn-ghost">Nos services</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <a href="tel:01.XX.XX.XX.XX" class="hero-tel">
+        <span>📞</span>
+        <div><span class="tel-num">01.XX.XX.XX.XX</span><span class="tel-tag">Ligne principale</span></div>
+      </a>
+      <a href="mailto:contact@entreprise.fr" class="hero-mail">
+        <span>✉️</span><span>contact@entreprise.fr</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="urgence-band">
+  <p>🚨 Fuite d'eau ou urgence plomberie ? On intervient rapidement dans tout Paris</p>
+  <a href="tel:01.XX.XX.XX.XX">📞 Appel urgent</a>
+</div>
+
+<div class="stats-band reveal">
+  <div class="stats-inner">
+    <div class="stat-it"><div class="stat-big">15</div><div class="stat-txt">Ans d'expérience</div></div>
+    <div class="stat-it"><div class="stat-big">+1200</div><div class="stat-txt">Clients satisfaits</div></div>
+    <div class="stat-it"><div class="stat-big">Paris</div><div class="stat-txt">& banlieue</div></div>
+    <div class="stat-it"><div class="stat-big">Devis</div><div class="stat-txt">Gratuit sur place</div></div>
+  </div>
+</div>
+
+<div class="services-section reveal" id="services">
+  <div class="services-inner">
+    <div class="section-label">Ce qu'on fait</div>
+    <h2 class="section-title">Nos services</h2>
+    <p class="section-sub">Du dépannage urgent à la rénovation complète — un seul numéro, une équipe expérimentée</p>
+    <div class="line"></div>
+    <div class="services-grid">
+      <div class="srv-card"><span class="srv-icon">💧</span><h3>Fuite d'eau<span class="urgent-badge">Urgent</span></h3><p>Intervention rapide, diagnostic précis, réparation durable</p></div>
+      <div class="srv-card"><span class="srv-icon">🚿</span><h3>Robinetterie</h3><p>Remplacement et réparation robinets, mitigeurs, douchettes</p></div>
+      <div class="srv-card"><span class="srv-icon">🛁</span><h3>Sanitaire</h3><p>Pose lavabo, évier, douche, baignoire, WC</p></div>
+      <div class="srv-card"><span class="srv-icon">🔥</span><h3>Chauffe-eau</h3><p>Installation et remplacement ballon eau chaude toutes marques</p></div>
+      <div class="srv-card"><span class="srv-icon">🪠</span><h3>Dégorgement</h3><p>Débouchage lavabo, douche, évier, colonne d'immeuble</p></div>
+      <div class="srv-card"><span class="srv-icon">🔨</span><h3>Rénovation</h3><p>Rénovation complète salle de bain et cuisine</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="histoire-section reveal" id="histoire">
+  <div class="histoire-inner">
+    <div class="histoire-text">
+      <div class="section-label">Notre histoire</div>
+      <h2>Une <em>passion</em><br>avant tout.</h2>
+      <p>Fondée il y a 15 ans par un artisan passionné, Plomberie Parisienne est née d'une conviction simple : la plomberie mérite d'être exercée avec rigueur, transparence et respect du client. Ce qui a commencé comme une aventure solo est devenu une équipe soudée, reconnue dans tout Paris.</p>
+      <p>Nous travaillons essentiellement grâce au bouche-à-oreille — notre meilleure carte de visite. Chaque intervention est soignée comme si c'était chez nous. Nos clients nous font confiance depuis des années et n'hésitent pas à nous recommander à leurs proches.</p>
+    </div>
+    <div class="histoire-quote">
+      <blockquote>Un bon plombier ne règle pas juste une fuite — il donne la tranquillité d'esprit.</blockquote>
+      <cite>— Plomberie Parisienne</cite>
+    </div>
+  </div>
+</div>
+
+<div class="avis-section reveal" id="avis">
+  <div class="avis-inner">
+    <div class="section-label">Témoignages</div>
+    <h2 class="section-title">Ils nous font confiance</h2>
+    <p class="section-sub">Note 5 étoiles · Paris</p>
+    <div class="avis-grid">
+      <div class="avis-card"><div class="stars">★★★★★</div><blockquote>Intervention en moins d'une heure pour une fuite sous l'évier. Travail soigné, prix honnête, je recommande vivement.</blockquote><div class="avis-author">— Thomas D. · Paris 11ème</div></div>
+      <div class="avis-card"><div class="stars">★★★★★</div><blockquote>Rénovation complète de ma salle de bain en 3 jours. Équipe sérieuse, ponctuelle et très propre. Résultat impeccable.</blockquote><div class="avis-author">— Marie L. · Paris 15ème</div></div>
+      <div class="avis-card"><div class="stars">★★★★★</div><blockquote>Chauffe-eau remplacé le jour même de mon appel. Tarif transparent, aucune mauvaise surprise. Je les garde dans mes contacts.</blockquote><div class="avis-author">— François B. · Paris 18ème</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="contact-section reveal" id="contact">
+  <div class="contact-inner">
+    <div class="section-label">Nous contacter</div>
+    <h2 class="section-title">Devis gratuit & contact</h2>
+    <p class="section-sub">Pour tout dépannage urgent ou projet de rénovation — notre équipe répond rapidement et se déplace gratuitement pour établir votre devis.</p>
+    <div class="line"></div>
+    <div class="contact-grid">
+      <div class="contact-infos">
+        <a href="tel:01.XX.XX.XX.XX" class="c-btn c-btn-main">
+          <span class="c-btn-icon">📞</span>
+          <div><span class="c-btn-label">Téléphone</span><span class="c-btn-val">01.XX.XX.XX.XX</span></div>
+        </a>
+        <a href="mailto:contact@entreprise.fr" class="c-btn c-btn-outline">
+          <span class="c-btn-icon">✉️</span>
+          <div><span class="c-btn-label">Email</span><span class="c-btn-val">contact@entreprise.fr</span></div>
+        </a>
+        <div class="c-btn c-btn-outline" style="cursor:default">
+          <span class="c-btn-icon">📍</span>
+          <div><span class="c-btn-label">Adresse</span><span class="c-btn-val" style="font-size:0.82rem">Paris</span></div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Demande de devis gratuit</h3>
+        <form action="https://formspree.io/f/contact@entreprise.fr" method="POST" id="devis-form">
+          <div class="form-row">
+            <div class="form-group"><label>Prénom *</label><input type="text" name="prenom" placeholder="Votre prénom" required></div>
+            <div class="form-group"><label>Téléphone *</label><input type="tel" name="telephone" placeholder="06 XX XX XX XX" required></div>
+          </div>
+          <div class="form-group"><label>Type d'intervention *</label>
+            <select name="intervention" required>
+              <option value="">Choisissez...</option>
+              <option>Fuite d'eau</option>
+              <option>Robinetterie</option>
+              <option>Sanitaire</option>
+              <option>Chauffe-eau</option>
+              <option>Dégorgement</option>
+              <option>Rénovation</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Description *</label><textarea name="message" placeholder="Décrivez votre besoin..." required></textarea></div>
+          <button type="submit" class="form-submit">Envoyer ma demande</button>
+          <div class="form-success" id="form-success">✅ Demande envoyée ! On vous rappelle rapidement.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <p><strong>Plomberie Parisienne</strong> · plombier · Paris</p>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#histoire">Histoire</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <p style="font-size:0.68rem">SARL · RCS Paris B443 564 430</p>
+  </div>
+</footer>
+
+<script>
+// Formulaire
+const form = document.getElementById('devis-form');
+if(form){
+  form.addEventListener('submit', async(e) => {
+    e.preventDefault();
+    const btn = form.querySelector('.form-submit');
+    btn.textContent = 'Envoi...'; btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {method:'POST', body: new FormData(form), headers:{Accept:'application/json'}});
+      if(res.ok){ document.getElementById('form-success').style.display='block'; form.reset(); btn.textContent='Envoyé !';}
+      else { btn.textContent='Réessayer'; btn.disabled=false; }
+    } catch { btn.textContent='Réessayer'; btn.disabled=false; }
+  });
+}
+
+// Reveal
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*80); });
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
