@@ -209,7 +209,7 @@ function appliquerJSON() {
 async function generer() {
   const response = await fetch('../artisan-base.html');
   let template = await response.text();
-  const champs = [
+ const champs = [
     'NOM_ENTREPRISE','METIER','VILLE','TELEPHONE','EMAIL','ADRESSE',
     'EXPERIENCE','SIRET','SLOGAN_COURT','SLOGAN_LONG','DESCRIPTION',
     'BADGE_URGENCE','URGENCE_TEXTE','STAT1_NUM','STAT1_LABEL',
@@ -221,8 +221,9 @@ async function generer() {
     'SERVICE5_ICON','SERVICE5_NOM','SERVICE5_DESC',
     'SERVICE6_ICON','SERVICE6_NOM','SERVICE6_DESC',
     'AVIS1_TEXTE','AVIS1_AUTEUR','AVIS2_TEXTE','AVIS2_AUTEUR',
-    'AVIS3_TEXTE','AVIS3_AUTEUR','CONTACT_DESC','SERVICES_INTRO'
-  ];
+    'AVIS3_TEXTE','AVIS3_AUTEUR','CONTACT_DESC','SERVICES_INTRO',
+    'HISTOIRE_P1','HISTOIRE_P2','HISTOIRE_CITATION','METIER_CLASSE','FORMSPREE_ID'
+];
   champs.forEach(champ => {
     const el = document.getElementById(champ);
     const valeur = el ? (el.value || el.placeholder) : '';
