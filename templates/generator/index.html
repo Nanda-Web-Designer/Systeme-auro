@@ -334,13 +334,17 @@ main{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 57px)}
       <label>Téléphone mobile / urgences</label>
       <input type="text" id="tel2" placeholder="06 XX XX XX XX (si trouvé)"/>
     </div>
-    <div class="input-group">
+   <div class="input-group">
       <label>Email</label>
       <input type="email" id="email" placeholder="contact@entreprise.fr"/>
     </div>
     <div class="input-group">
-      <label class="field-required">Adresse</label>
-      <input type="text" id="adresse" placeholder="35 Rue du Ruisseau, 75018 Paris"/>
+      <label>Lien Formspree</label>
+      <input type="text" id="formspree" placeholder="https://formspree.io/f/XXXXXXXX"/>
+      <small style="font-size:0.65rem;color:var(--muted);margin-top:0.3rem">
+        → Va sur <a href="https://formspree.io" target="_blank" style="color:var(--accent)">formspree.io</a>, 
+        crée un form avec l'email client, copie le lien ici
+      </small>
     </div>
     <div class="input-row">
       <div class="input-group">
@@ -755,6 +759,7 @@ function generateHTML() {
     instagram: val('instagram'),
     facebook:  val('facebook'),
     note:      val('note'),
+    formspree: val('formspree'),
     slogan:    val('f-slogan'),
     hero:      val('f-hero'),
     histoire:  val('f-histoire'),
@@ -925,7 +930,7 @@ footer span{color:var(--c3)}
       </div>
       <div style="background:var(--c4);border:1px solid var(--border);border-radius:10px;padding:1.5rem">
         <h3 style="font-family:'Playfair Display',serif;color:var(--c1);margin-bottom:1.2rem">Demande de devis gratuit</h3>
-        <form action="https://formspree.io/f/VOTRE_ID_FORMSPREE" method="POST">
+        <form ${d.formspree || 'https://formspree.io/f/VOTRE_ID_FORMSPREE'}" method="POST">
           <input type="text" name="nom" placeholder="Votre nom *" required style="width:100%;padding:0.7rem;margin-bottom:0.6rem;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:0.85rem;background:white"/><br>
           <input type="tel" name="tel" placeholder="Votre téléphone *" required style="width:100%;padding:0.7rem;margin-bottom:0.6rem;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:0.85rem;background:white"/><br>
           <textarea name="message" placeholder="Décrivez votre besoin..." rows="4" required style="width:100%;padding:0.7rem;margin-bottom:0.6rem;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:0.85rem;resize:vertical;background:white"></textarea>
