@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auro — Générateur de sites artisans v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0F1117;
+  --surface:#1A1D27;
+  --surface2:#22263A;
+  --border:#2E3348;
+  --accent:#6C63FF;
+  --accent2:#00D4AA;
+  --warm:#F0C27F;
+  --red:#FF5C5C;
+  --text:#E8EAF0;
+  --muted:#6B7280;
+  --success:#4CAF50;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── HEADER ─────────────────────────────── */
+header{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:1rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.logo{display:flex;align-items:center;gap:0.6rem}
+.logo-dot{width:10px;height:10px;background:var(--accent);border-radius:50%}
+.logo span{font-size:1rem;font-weight:700;color:var(--text);letter-spacing:-0.02em}
+.logo small{font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+.header-badge{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:0.3rem 0.8rem;font-size:0.68rem;color:var(--muted)}
+
+/* ── LAYOUT ──────────────────────────────── */
+main{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 57px)}
+
+/* ── SIDEBAR (panneau gauche) ────────────── */
+.sidebar{
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  padding:1.5rem;
+  overflow-y:auto;
+  display:flex;flex-direction:column;gap:1.2rem;
+}
+
+/* ── PANNEAU DROIT ───────────────────────── */
+.panel{padding:1.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.2rem}
+
+/* ── SECTION CARD ─────────────────────────── */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1.2rem;
+}
+.card-title{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;
+}
+.card-title .step-num{
+  width:18px;height:18px;background:var(--accent);border-radius:50%;
+  font-size:0.6rem;font-weight:700;color:white;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.card-title .step-check{
+  width:18px;height:18px;background:var(--success);border-radius:50%;
+  font-size:0.65rem;color:white;display:none;
+  align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* ── INPUTS ───────────────────────────────── */
+.input-group{display:flex;flex-direction:column;gap:0.35rem;margin-bottom:0.8rem}
+.input-group label{font-size:0.72rem;font-weight:500;color:var(--muted)}
+.input-group input,.input-group select,.input-group textarea{
+  background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;
+  padding:0.6rem 0.8rem;font-size:0.85rem;color:var(--text);font-family:'Inter',sans-serif;
+  outline:none;transition:border-color 0.2s;
+}
+.input-group input:focus,.input-group select:focus,.input-group textarea:focus{border-color:var(--accent)}
+.input-group textarea{min-height:80px;resize:vertical}
+.input-group select option{background:var(--surface2);color:var(--text)}
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem}
+
+/* ── BOUTONS RECHERCHE ←←← LE COEUR ─────── */
+.search-bar{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:0.8rem;
+  margin-bottom:0.8rem;
+}
+.search-bar-label{font-size:0.65rem;font-weight:600;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.6rem}
+.search-btns{display:flex;flex-direction:column;gap:0.4rem}
+.search-btn{
+  display:flex;align-items:center;gap:0.6rem;
+  padding:0.6rem 0.9rem;border-radius:6px;
+  font-size:0.78rem;font-weight:500;
+  text-decoration:none;cursor:pointer;border:none;
+  transition:all 0.18s;text-align:left;width:100%;
+}
+.search-btn:hover{transform:translateX(3px)}
+.search-btn .s-icon{font-size:1rem;flex-shrink:0}
+.search-btn .s-name{font-weight:600;flex:1}
+.search-btn .s-desc{font-size:0.65rem;opacity:0.6;margin-left:auto}
+.btn-pj{background:rgba(255,165,0,0.12);border:1px solid rgba(255,165,0,0.25);color:#FFA500}
+.btn-pj:hover{background:rgba(255,165,0,0.2)}
+.btn-gm{background:rgba(66,133,244,0.12);border:1px solid rgba(66,133,244,0.25);color:#4285F4}
+.btn-gm:hover{background:rgba(66,133,244,0.2)}
+.btn-so{background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.25);color:var(--accent2)}
+.btn-so:hover{background:rgba(0,212,170,0.2)}
+.btn-fb{background:rgba(24,119,242,0.12);border:1px solid rgba(24,119,242,0.25);color:#1877F2}
+.btn-fb:hover{background:rgba(24,119,242,0.2)}
+.btn-yelp{background:rgba(196,0,0,0.12);border:1px solid rgba(196,0,0,0.25);color:#C41200}
+.btn-yelp:hover{background:rgba(196,0,0,0.2)}
+
+.search-hint{
+  font-size:0.68rem;color:var(--muted);
+  background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.15);
+  border-radius:6px;padding:0.5rem 0.7rem;margin-top:0.6rem;line-height:1.5;
+}
+.search-hint strong{color:var(--accent)}
+
+/* ── BOUTONS ACTIONS ──────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
+  padding:0.7rem 1.2rem;border-radius:6px;font-size:0.82rem;font-weight:600;
+  border:none;cursor:pointer;transition:all 0.2s;width:100%;font-family:'Inter',sans-serif;
+}
+.btn-accent{background:var(--accent);color:white}
+.btn-accent:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 6px 20px rgba(108,99,255,0.3)}
+.btn-green{background:var(--accent2);color:#000}
+.btn-green:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--muted)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-warm{background:var(--warm);color:#1A0F00;font-weight:700}
+.btn-warm:hover{opacity:0.9}
+.btn-sm{padding:0.4rem 0.8rem;font-size:0.72rem;width:auto}
+
+/* ── PRESETS COULEURS ─────────────────────── */
+.presets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-bottom:0.8rem}
+.preset-btn{
+  border:2px solid transparent;border-radius:8px;padding:0.5rem;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:0.3rem;
+  font-size:0.65rem;color:var(--muted);background:var(--surface2);
+  transition:all 0.2s;font-family:'Inter',sans-serif;
+}
+.preset-btn:hover,.preset-btn.active{border-color:var(--accent);color:var(--text)}
+.preset-swatch{width:100%;height:28px;border-radius:4px;display:flex;overflow:hidden}
+.preset-swatch span{flex:1}
+
+/* ── SECTION PROMPT ───────────────────────── */
+.prompt-box{
+  background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  padding:1rem;font-size:0.8rem;color:var(--text);line-height:1.7;
+  white-space:pre-wrap;font-family:'Inter',sans-serif;min-height:120px;
+  max-height:280px;overflow-y:auto;
+}
+.prompt-actions{display:flex;gap:0.6rem;margin-top:0.8rem}
+
+/* ── JSON IMPORT ──────────────────────────── */
+.json-area{
+  background:var(--surface2);border:1.5px dashed var(--border);border-radius:8px;
+  padding:1rem;font-size:0.75rem;color:var(--muted);font-family:'Monaco',monospace;
+  min-height:100px;resize:vertical;width:100%;outline:none;
+  transition:border-color 0.2s;
+}
+.json-area:focus{border-color:var(--accent2);color:var(--text)}
+
+/* ── STATUS TAGS ──────────────────────────── */
+.tag{display:inline-flex;align-items:center;gap:0.3rem;font-size:0.65rem;padding:0.2rem 0.6rem;border-radius:10px;font-weight:600}
+.tag-ok{background:rgba(76,175,80,0.15);color:var(--success)}
+.tag-warn{background:rgba(240,194,127,0.15);color:var(--warm)}
+.tag-info{background:rgba(108,99,255,0.15);color:var(--accent)}
+
+/* ── CHAMPS FORMULAIRE ────────────────────── */
+.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
+.field-item{
+  background:var(--surface2);border:1px solid var(--border);border-radius:6px;
+  padding:0.6rem 0.8rem;
+}
+.field-item label{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:0.2rem}
+.field-item input,.field-item textarea{
+  background:transparent;border:none;color:var(--text);font-size:0.78rem;
+  width:100%;outline:none;font-family:'Inter',sans-serif;resize:none;
+}
+.field-item.full{grid-column:1/-1}
+.field-required::after{content:'*';color:var(--red);margin-left:2px}
+
+/* ── EXPORT ───────────────────────────────── */
+.export-actions{display:flex;gap:0.6rem;flex-wrap:wrap}
+.export-preview{
+  background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  height:200px;display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;color:var(--muted);text-align:center;
+}
+
+/* ── NOTIFICATION ─────────────────────────── */
+.notif{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;
+  background:var(--surface);border:1px solid var(--accent);border-radius:8px;
+  padding:0.8rem 1.2rem;font-size:0.82rem;color:var(--text);
+  transform:translateY(20px);opacity:0;transition:all 0.3s;pointer-events:none;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.notif.show{transform:translateY(0);opacity:1}
+
+/* ── RESPONSIVE ───────────────────────────── */
+@media(max-width:900px){
+  main{grid-template-columns:1fr}
+  .sidebar{border-right:none;border-bottom:1px solid var(--border)}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    <div>
+      <span>Auro</span>
+      <small>Générateur de sites artisans</small>
+    </div>
+  </div>
+  <div class="header-badge">v3 · Recherche intégrée</div>
+</header>
+
+<main>
+
+<!-- ════════════════════════════════
+     SIDEBAR — PANNEAU GAUCHE
+════════════════════════════════ -->
+<div class="sidebar">
+
+  <!-- ① INFOS MÉTIER ────────────────── -->
+  <div class="card">
+    <div class="card-title">
+      <span class="step-num">1</span>
+      Métier & Localisation
+    </div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>Métier *</label>
+        <input type="text" id="metier" placeholder="Plombier, Électricien..." value="Plombier"/>
+      </div>
+      <div class="input-group">
+        <label>Ville *</label>
+        <input type="text" id="ville" placeholder="Paris 18" value="Paris 18"/>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Nom de l'entreprise (optionnel)</label>
+      <input type="text" id="nom_entreprise" placeholder="Ex: Plomberie Dupont"/>
+    </div>
+    <button class="btn btn-accent" onclick="updateSearchButtons()">
+      🔍 Mettre à jour les recherches
+    </button>
+  </div>
+
+  <!-- ② RECHERCHE DIRECTE ←←← NOUVEAU ── -->
+  <div class="card">
+    <div class="card-title">
+      <span class="step-num">2</span>
+      Recherche directe — Infos client
+    </div>
+
+    <div class="search-bar">
+      <div class="search-bar-label">📁 Trouver l'entreprise</div>
+      <div class="search-btns">
+        <a id="btn-pj" href="#" target="_blank" class="search-btn btn-pj" onclick="openSearch('pj',event)">
+          <span class="s-icon">🟡</span>
+          <span class="s-name">Pages Jaunes</span>
+          <span class="s-desc">Tel, horaires, avis</span>
+        </a>
+        <a id="btn-gm" href="#" target="_blank" class="search-btn btn-gm" onclick="openSearch('gm',event)">
+          <span class="s-icon">📍</span>
+          <span class="s-name">Google Maps</span>
+          <span class="s-desc">Adresse, photos</span>
+        </a>
+        <a id="btn-so" href="#" target="_blank" class="search-btn btn-so" onclick="openSearch('so',event)">
+          <span class="s-icon">🏢</span>
+          <span class="s-name">Societe.com</span>
+          <span class="s-desc">SIRET, dirigeant</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <div class="search-bar-label">💬 Avis & Réseaux</div>
+      <div class="search-btns">
+        <a id="btn-gg" href="#" target="_blank" class="search-btn btn-gm" onclick="openSearch('gg',event)">
+          <span class="s-icon">⭐</span>
+          <span class="s-name">Avis Google</span>
+          <span class="s-desc">Note, témoignages</span>
+        </a>
+        <a id="btn-fb" href="#" target="_blank" class="search-btn btn-fb" onclick="openSearch('fb',event)">
+          <span class="s-icon">👥</span>
+          <span class="s-name">Facebook</span>
+          <span class="s-desc">Page entreprise</span>
+        </a>
+        <a id="btn-yl" href="#" target="_blank" class="search-btn btn-yelp" onclick="openSearch('yl',event)">
+          <span class="s-icon">🔴</span>
+          <span class="s-name">Yelp</span>
+          <span class="s-desc">Avis alternatifs</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="search-hint">
+      <strong>💡 Comment utiliser :</strong><br>
+      1. Entre le métier + ville ci-dessus<br>
+      2. Clique sur un bouton → s'ouvre dans un onglet<br>
+      3. Copie les infos dans les champs ci-dessous<br>
+      4. ⚠️ Ne mets que des infos <strong>vraiment trouvées</strong>, jamais inventées
+    </div>
+  </div>
+
+  <!-- ③ INFOS CLIENT RÉELLES ─────────── -->
+  <div class="card">
+    <div class="card-title">
+      <span class="step-num">3</span>
+      Infos client réelles
+      <span class="tag tag-warn" style="margin-left:auto">⚠️ Vérifiées seulement</span>
+    </div>
+    <div class="input-group">
+      <label class="field-required">Téléphone principal</label>
+      <input type="text" id="tel1" placeholder="01 XX XX XX XX"/>
+    </div>
+    <div class="input-group">
+      <label>Téléphone mobile / urgences</label>
+      <input type="text" id="tel2" placeholder="06 XX XX XX XX (si trouvé)"/>
+    </div>
+    <div class="input-group">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="contact@entreprise.fr"/>
+    </div>
+    <div class="input-group">
+      <label class="field-required">Adresse</label>
+      <input type="text" id="adresse" placeholder="35 Rue du Ruisseau, 75018 Paris"/>
+    </div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>SIRET (si trouvé)</label>
+        <input type="text" id="siret" placeholder="443 564 430"/>
+      </div>
+      <div class="input-group">
+        <label>Note Google</label>
+        <input type="text" id="note" placeholder="4.9 ⭐"/>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Réseaux sociaux (si trouvés)</label>
+      <input type="text" id="instagram" placeholder="@nom_instagram"/>
+      <input type="text" id="facebook" placeholder="URL Facebook" style="margin-top:0.4rem"/>
+    </div>
+  </div>
+
+  <!-- ④ COULEURS ─────────────────────── -->
+  <div class="card">
+    <div class="card-title">
+      <span class="step-num">4</span>
+      Couleurs
+    </div>
+    <div class="presets-grid">
+      <button class="preset-btn active" onclick="applyPreset('plombier',this)">
+        <div class="preset-swatch"><span style="background:#1A5276"></span><span style="background:#85C1E9"></span><span style="background:#F0C27F"></span></div>
+        Plombier
+      </button>
+      <button class="preset-btn" onclick="applyPreset('electricien',this)">
+        <div class="preset-swatch"><span style="background:#1A1A2E"></span><span style="background:#E94560"></span><span style="background:#F5C518"></span></div>
+        Électricien
+      </button>
+      <button class="preset-btn" onclick="applyPreset('caviste',this)">
+        <div class="preset-swatch"><span style="background:#4A0E2B"></span><span style="background:#C4637A"></span><span style="background:#C4A882"></span></div>
+        Caviste
+      </button>
+      <button class="preset-btn" onclick="applyPreset('coiffeur',this)">
+        <div class="preset-swatch"><span style="background:#2C2C2C"></span><span style="background:#D4AF8C"></span><span style="background:#F5F0EB"></span></div>
+        Coiffeur
+      </button>
+      <button class="preset-btn" onclick="applyPreset('restaurant',this)">
+        <div class="preset-swatch"><span style="background:#1B1B1B"></span><span style="background:#C0392B"></span><span style="background:#F39C12"></span></div>
+        Restaurant
+      </button>
+      <button class="preset-btn" onclick="applyPreset('jardinier',this)">
+        <div class="preset-swatch"><span style="background:#1A3C2B"></span><span style="background:#4A7C59"></span><span style="background:#C4A882"></span></div>
+        Jardinier
+      </button>
+    </div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>Couleur principale</label>
+        <input type="color" id="color1" value="#1A5276" style="height:36px;cursor:pointer"/>
+      </div>
+      <div class="input-group">
+        <label>Couleur secondaire</label>
+        <input type="color" id="color2" value="#85C1E9" style="height:36px;cursor:pointer"/>
+      </div>
+    </div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>Couleur accent</label>
+        <input type="color" id="color3" value="#F0C27F" style="height:36px;cursor:pointer"/>
+      </div>
+      <div class="input-group">
+        <label>Fond</label>
+        <input type="color" id="color4" value="#FBF8F3" style="height:36px;cursor:pointer"/>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sidebar -->
+
+<!-- ════════════════════════════════
+     PANNEAU DROIT
+════════════════════════════════ -->
+<div class="panel">
+
+  <!-- ⑤ GÉNÉRATEUR DE PROMPT ──────────── -->
+  <div class="card">
+    <div class="card-title">
+      <span class="step-num">5</span>
+      Prompt pour Claude / ChatGPT
+    </div>
+    <button class="btn btn-accent" onclick="generatePrompt()" style="margin-bottom:1rem">
+      ✨ Générer le prompt
+    </button>
+    <div class="prompt-box" id="prompt-output">
+      → Clique sur "Générer le prompt" pour créer ton prompt intelligent...
+    </div>
+    <div class="prompt-actions">
+      <button class="btn btn-outline btn-sm" onclick="copyPrompt()">📋 Copier le prompt</button>
+      <button class="btn btn-outline btn-sm" onclick="openClaude()">🤖 Ouvrir Claude</button>
+      <button class="btn btn-outline btn-sm" onclick="openChatGPT()">💬 Ouvrir ChatGPT</button>
+    </div>
+  </div>
+
+  <!-- ⑥ IMPORT JSON ──────────────────── -->
+  <div class="card">
+    <div class="card-title">
+      <span class="step-num">6</span>
+      Colle le JSON retourné par l'IA
+    </div>
+    <textarea class="json-area" id="json-input" placeholder='Colle le JSON ici après avoir interrogé Claude ou ChatGPT...
+
+Exemple attendu:
+{
+  "slogan": "ça coule de source",
+  "histoire": "Depuis 20 ans...",
+  "services": ["Fuite d eau", "Chaudière", ...],
+  "description_hero": "Votre plombier de confiance..."
+}'></textarea>
+    <div style="display:flex;gap:0.6rem;margin-top:0.8rem">
+      <button class="btn btn-green" onclick="parseJSON()" style="flex:1">
+        ⚡ Remplir les champs automatiquement
+      </button>
+      <button class="btn btn-outline btn-sm" onclick="clearJSON()">✕ Vider</button>
+    </div>
+    <div id="json-status" style="margin-top:0.6rem;font-size:0.75rem;color:var(--muted)"></div>
+  </div>
+
+  <!-- ⑦ CHAMPS CONTENU ─────────────────── -->
+  <div class="card">
+    <div class="card-title">
+      <span class="step-num">7</span>
+      Contenu du site
+      <span class="tag tag-info" style="margin-left:auto">Généré par IA ou saisi manuellement</span>
+    </div>
+    <div class="fields-grid">
+      <div class="field-item full">
+        <label>Slogan (tagline principale)</label>
+        <input type="text" id="f-slogan" placeholder="ça coule de source..."/>
+      </div>
+      <div class="field-item full">
+        <label>Description hero (2-3 phrases)</label>
+        <textarea id="f-hero" rows="2" placeholder="Dépannage, installation, rénovation complète..."></textarea>
+      </div>
+      <div class="field-item full">
+        <label>Histoire / À propos</label>
+        <textarea id="f-histoire" rows="3" placeholder="Depuis X ans dans le métier..."></textarea>
+      </div>
+      <div class="field-item">
+        <label>Service 1</label>
+        <input type="text" id="f-srv1" placeholder="Fuite d'eau"/>
+      </div>
+      <div class="field-item">
+        <label>Service 2</label>
+        <input type="text" id="f-srv2" placeholder="Chaudière"/>
+      </div>
+      <div class="field-item">
+        <label>Service 3</label>
+        <input type="text" id="f-srv3" placeholder="Sanitaire"/>
+      </div>
+      <div class="field-item">
+        <label>Service 4</label>
+        <input type="text" id="f-srv4" placeholder="Ballon eau chaude"/>
+      </div>
+      <div class="field-item">
+        <label>Service 5</label>
+        <input type="text" id="f-srv5" placeholder="Dégorgement"/>
+      </div>
+      <div class="field-item">
+        <label>Service 6</label>
+        <input type="text" id="f-srv6" placeholder="Rénovation salle de bain"/>
+      </div>
+      <div class="field-item full">
+        <label>Quartiers / Zone d'intervention</label>
+        <input type="text" id="f-zone" placeholder="Montmartre, Clignancourt, La Chapelle..."/>
+      </div>
+      <div class="field-item">
+        <label>Années d'expérience</label>
+        <input type="text" id="f-exp" placeholder="20"/>
+      </div>
+      <div class="field-item">
+        <label>Spécialité / Accroche</label>
+        <input type="text" id="f-spec" placeholder="Entreprise familiale"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑧ EXPORT ──────────────────────── -->
+  <div class="card">
+    <div class="card-title">
+      <span class="step-num">8</span>
+      Générer & Exporter
+    </div>
+    <div class="input-group">
+      <label>Template de base</label>
+      <select id="template-choice">
+        <option value="plombier">Plombier (index.html existant)</option>
+        <option value="caviste">Caviste (site_vins_vivants_v2.html)</option>
+        <option value="generique">Générique (à venir)</option>
+      </select>
+    </div>
+    <div class="export-actions">
+      <button class="btn btn-warm" onclick="generateHTML()" style="flex:2">
+        🚀 Générer le HTML final
+      </button>
+      <button class="btn btn-outline" onclick="previewSite()" style="flex:1">
+        👁️ Aperçu
+      </button>
+    </div>
+    <div id="export-status" style="margin-top:0.8rem"></div>
+  </div>
+
+</div><!-- /panel -->
+</main>
+
+<!-- NOTIFICATION TOAST -->
+<div class="notif" id="notif"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DONNÉES & ÉTAT
+// ═══════════════════════════════════════════════════
+const PRESETS = {
+  plombier:    { c1:'#1A5276', c2:'#85C1E9', c3:'#F0C27F', c4:'#FBF8F3' },
+  electricien: { c1:'#1A1A2E', c2:'#E94560', c3:'#F5C518', c4:'#F5F5F0' },
+  caviste:     { c1:'#4A0E2B', c2:'#C4637A', c3:'#C4A882', c4:'#FBF7F2' },
+  coiffeur:    { c1:'#2C2C2C', c2:'#D4AF8C', c3:'#F5F0EB', c4:'#FAFAFA' },
+  restaurant:  { c1:'#1B1B1B', c2:'#C0392B', c3:'#F39C12', c4:'#FDF6EC' },
+  jardinier:   { c1:'#1A3C2B', c2:'#4A7C59', c3:'#C4A882', c4:'#F5F2EC' },
+};
+
+// URLs de recherche — encode proprement le terme
+function buildSearchURL(type) {
+  const metier  = document.getElementById('metier').value.trim() || 'Artisan';
+  const ville   = document.getElementById('ville').value.trim() || 'Paris';
+  const nom     = document.getElementById('nom_entreprise').value.trim();
+  const query   = nom ? `${nom} ${ville}` : `${metier} ${ville}`;
+  const q       = encodeURIComponent(query);
+  const qPlain  = encodeURIComponent(query.toLowerCase().replace(/\s+/g, '-'));
+
+  switch(type) {
+    case 'pj':  return `https://www.pagesjaunes.fr/annuaire/chercherlespros?quoiqui=${encodeURIComponent(metier)}&ou=${encodeURIComponent(ville)}`;
+    case 'gm':  return `https://www.google.com/maps/search/${q}`;
+    case 'so':  return `https://www.societe.com/cgi-bin/search?champs=${q}`;
+    case 'gg':  return `https://www.google.com/search?q=${q}+avis+google`;
+    case 'fb':  return `https://www.facebook.com/search/top?q=${q}`;
+    case 'yl':  return `https://www.yelp.fr/search?find_desc=${encodeURIComponent(metier)}&find_loc=${encodeURIComponent(ville)}`;
+    default:    return '#';
+  }
+}
+
+function openSearch(type, e) {
+  e.preventDefault();
+  const url = buildSearchURL(type);
+  window.open(url, '_blank');
+}
+
+function updateSearchButtons() {
+  const ids = ['pj','gm','so','gg','fb','yl'];
+  // Mise à jour visuelle — les clics recalculent dynamiquement
+  notify('🔍 Recherches mises à jour pour : ' + document.getElementById('metier').value + ' · ' + document.getElementById('ville').value);
+}
+
+// ═══════════════════════════════════════════════════
+// PRESETS COULEURS
+// ═══════════════════════════════════════════════════
+function applyPreset(name, btn) {
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const p = PRESETS[name];
+  if (!p) return;
+  document.getElementById('color1').value = p.c1;
+  document.getElementById('color2').value = p.c2;
+  document.getElementById('color3').value = p.c3;
+  document.getElementById('color4').value = p.c4;
+  notify('🎨 Preset "' + name + '" appliqué !');
+}
+
+// ═══════════════════════════════════════════════════
+// GÉNÉRATION DU PROMPT
+// ═══════════════════════════════════════════════════
+function generatePrompt() {
+  const metier = document.getElementById('metier').value.trim();
+  const ville  = document.getElementById('ville').value.trim();
+  const nom    = document.getElementById('nom_entreprise').value.trim();
+  const tel1   = document.getElementById('tel1').value.trim();
+  const adresse= document.getElementById('adresse').value.trim();
+  const note   = document.getElementById('note').value.trim();
+
+  if (!metier || !ville) {
+    notify('⚠️ Remplis le métier et la ville d\'abord !');
+    return;
+  }
+
+  const infosReelles = [
+    tel1    && `- Téléphone : ${tel1}`,
+    adresse && `- Adresse : ${adresse}`,
+    nom     && `- Nom entreprise : ${nom}`,
+    note    && `- Note Google : ${note}`,
+  ].filter(Boolean).join('\n') || '- (aucune info client trouvée pour le moment)';
+
+  const prompt = `Tu es un rédacteur web spécialisé en artisans locaux.
+Génère le contenu pour le site web d'un(e) ${metier} situé(e) à ${ville}${nom ? ` — entreprise : "${nom}"` : ''}.
+
+RÈGLES ABSOLUES :
+- Ne jamais inventer de numéro de téléphone, adresse, email ou SIRET réel
+- Ne jamais inventer d'avis clients réels (marque-les "DÉMO")
+- Ne jamais inventer une histoire précise (reste générique si pas d'info)
+
+INFOS RÉELLES DISPONIBLES (ne pas modifier) :
+${infosReelles}
+
+CONTENU À GÉNÉRER (JSON uniquement, sans explication) :
+{
+  "slogan": "tagline courte et mémorable, adaptée au ${metier} (max 5 mots)",
+  "slogan_court": "version 2-3 mots style motto",
+  "description_hero": "2 phrases accrocheuses pour la section hero",
+  "histoire": "Paragraphe de 3-4 phrases générant confiance, sans infos inventées. Parle du métier, de la passion, du service local.",
+  "services": [
+    {"nom": "Service 1", "desc": "Description courte", "urgent": false},
+    {"nom": "Service 2", "desc": "Description courte", "urgent": true},
+    {"nom": "Service 3", "desc": "Description courte", "urgent": false},
+    {"nom": "Service 4", "desc": "Description courte", "urgent": false},
+    {"nom": "Service 5", "desc": "Description courte", "urgent": true},
+    {"nom": "Service 6", "desc": "Description courte", "urgent": false}
+  ],
+  "avis_demo": [
+    {"auteur": "Prénom N.", "texte": "Avis fictif crédible - DÉMO", "quartier": "quartier de ${ville}"},
+    {"auteur": "Prénom N.", "texte": "Avis fictif crédible - DÉMO", "quartier": "quartier de ${ville}"},
+    {"auteur": "Prénom N.", "texte": "Avis fictif crédible - DÉMO", "quartier": "quartier de ${ville}"}
+  ],
+  "quartiers": ["quartier1", "quartier2", "quartier3", "quartier4", "quartier5"],
+  "zone_label": "Zone principale d'intervention en 1 phrase",
+  "meta_title": "Title SEO optimal pour ${metier} ${ville}",
+  "meta_desc": "Meta description SEO 155 caractères max"
+}
+
+Réponds UNIQUEMENT avec le JSON, sans texte avant ou après.`;
+
+  document.getElementById('prompt-output').textContent = prompt;
+  notify('✨ Prompt généré ! Copie-le et colle dans Claude ou ChatGPT.');
+}
+
+function copyPrompt() {
+  const txt = document.getElementById('prompt-output').textContent;
+  if (txt.startsWith('→')) { notify('⚠️ Génère le prompt d\'abord !'); return; }
+  navigator.clipboard.writeText(txt).then(() => notify('📋 Prompt copié !'));
+}
+
+function openClaude()   { window.open('https://claude.ai', '_blank'); }
+function openChatGPT()  { window.open('https://chatgpt.com', '_blank'); }
+
+// ═══════════════════════════════════════════════════
+// IMPORT JSON
+// ═══════════════════════════════════════════════════
+function parseJSON() {
+  const raw = document.getElementById('json-input').value.trim();
+  if (!raw) { notify('⚠️ Colle le JSON d\'abord !'); return; }
+
+  let data;
+  try {
+    // Nettoie les éventuels ```json ... ```
+    const cleaned = raw.replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/```\s*$/,'').trim();
+    data = JSON.parse(cleaned);
+  } catch(e) {
+    document.getElementById('json-status').innerHTML = '<span style="color:var(--red)">❌ JSON invalide — vérifie la syntaxe. ' + e.message + '</span>';
+    return;
+  }
+
+  // Remplissage auto des champs
+  if (data.slogan)           set('f-slogan', data.slogan);
+  if (data.description_hero) set('f-hero', data.description_hero);
+  if (data.histoire)         set('f-histoire', data.histoire);
+  if (data.zone_label)       set('f-zone', data.zone_label);
+
+  // Services
+  if (Array.isArray(data.services)) {
+    data.services.slice(0,6).forEach((s,i) => {
+      const el = document.getElementById(`f-srv${i+1}`);
+      if (el) el.value = typeof s === 'string' ? s : (s.nom || '');
+    });
+  }
+
+  // Quartiers
+  if (Array.isArray(data.quartiers)) {
+    const el = document.getElementById('f-zone');
+    if (el && !el.value) el.value = data.quartiers.join(', ');
+  }
+
+  document.getElementById('json-status').innerHTML = '<span style="color:var(--success)">✅ Champs remplis automatiquement !</span>';
+  notify('⚡ JSON importé ! Tous les champs ont été remplis.');
+}
+
+function clearJSON() {
+  document.getElementById('json-input').value = '';
+  document.getElementById('json-status').textContent = '';
+}
+
+function set(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.value = val;
+}
+
+// ═══════════════════════════════════════════════════
+// GÉNÉRATION HTML
+// ═══════════════════════════════════════════════════
+function generateHTML() {
+  // Collecte toutes les valeurs
+  const d = {
+    metier:    val('metier'),
+    ville:     val('ville'),
+    nom:       val('nom_entreprise'),
+    tel1:      val('tel1'),
+    tel2:      val('tel2'),
+    email:     val('email'),
+    adresse:   val('adresse'),
+    siret:     val('siret'),
+    instagram: val('instagram'),
+    facebook:  val('facebook'),
+    note:      val('note'),
+    slogan:    val('f-slogan'),
+    hero:      val('f-hero'),
+    histoire:  val('f-histoire'),
+    zone:      val('f-zone'),
+    exp:       val('f-exp'),
+    spec:      val('f-spec'),
+    services:  [1,2,3,4,5,6].map(i => val(`f-srv${i}`)).filter(Boolean),
+    c1:        val('color1'),
+    c2:        val('color2'),
+    c3:        val('color3'),
+    c4:        val('color4'),
+  };
+
+  if (!d.metier || !d.ville) {
+    notify('⚠️ Remplis le métier et la ville !');
+    return;
+  }
+
+  // Génère un HTML simple mais complet
+  const html = buildHTML(d);
+
+  // Téléchargement
+  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'index.html';
+  a.click();
+  URL.revokeObjectURL(url);
+
+  document.getElementById('export-status').innerHTML = `
+    <div style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:6px;padding:0.7rem;font-size:0.78rem;color:var(--success);margin-top:0.5rem">
+      ✅ <strong>index.html téléchargé !</strong><br>
+      <span style="color:var(--muted)">→ Crée un repo GitHub → Dépose le fichier → Connecte sur Vercel</span>
+    </div>`;
+  notify('🚀 index.html généré et téléchargé !');
+}
+
+function val(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function previewSite() {
+  notify('👁️ Génère d\'abord le HTML — aperçu en cours d\'implémentation');
+}
+
+// ═══════════════════════════════════════════════════
+// CONSTRUCTEUR HTML FINAL
+// ═══════════════════════════════════════════════════
+function buildHTML(d) {
+  const nom     = d.nom || `${d.metier} ${d.ville}`;
+  const slogan  = d.slogan || `Votre ${d.metier.toLowerCase()} de confiance`;
+  const hero    = d.hero || `Expert en ${d.metier.toLowerCase()} à ${d.ville}. Devis gratuit, intervention rapide.`;
+  const histoire= d.histoire || `Spécialiste de la plomberie depuis de nombreuses années à ${d.ville}.`;
+  const tel1    = d.tel1 || 'XX XX XX XX XX';
+  const services= d.services.length ? d.services : [`Service ${d.metier} 1`, `Service ${d.metier} 2`, `Service ${d.metier} 3`];
+
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${nom} – ${d.metier} ${d.ville}</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --c1:${d.c1};--c2:${d.c2};--c3:${d.c3};--c4:${d.c4};
+  --text:#1C2833;--muted:#5D6D7E;--border:#D5E8F5;--white:#fff;
+}
+body{font-family:'Inter',sans-serif;background:var(--c4);color:var(--text)}
+nav{background:var(--c1);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
+.logo{font-family:'Playfair Display',serif;color:white;font-size:1.1rem;font-weight:700;text-decoration:none}
+.nav-tel{background:var(--c3);color:var(--c1);padding:0.5rem 1rem;border-radius:4px;font-weight:700;text-decoration:none;font-size:0.85rem}
+.hero{background:var(--c1);padding:5rem 2rem;color:white}
+.hero-inner{max-width:900px;margin:0 auto}
+.hero h1{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;margin-bottom:1rem;line-height:1.1}
+.hero h1 em{color:var(--c3);font-style:italic}
+.slogan{font-family:'Playfair Display',serif;font-size:1.4rem;font-style:italic;color:var(--c3);margin-bottom:1.5rem;padding:0.8rem 1.2rem;border-left:4px solid var(--c3);background:rgba(255,255,255,0.05)}
+.hero p{font-size:1rem;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:2rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-main{background:var(--c3);color:var(--c1);padding:0.9rem 2rem;border-radius:5px;font-weight:700;text-decoration:none}
+.btn-ghost{border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.7);padding:0.9rem 2rem;border-radius:5px;text-decoration:none}
+section{padding:5rem 2rem}
+.section-inner{max-width:1000px;margin:0 auto}
+.s-label{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--c2);margin-bottom:0.5rem}
+h2{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--c1);margin-bottom:2rem}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+.srv{background:white;border:1px solid var(--border);border-radius:8px;padding:1.5rem;transition:all 0.3s}
+.srv:hover{border-color:var(--c1);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+.srv h3{font-size:0.9rem;font-weight:600;color:var(--c1);margin-bottom:0.4rem}
+.srv p{font-size:0.78rem;color:var(--muted);line-height:1.6}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.c-btn{display:flex;align-items:center;gap:0.8rem;padding:1rem;border-radius:8px;text-decoration:none;margin-bottom:0.8rem;transition:all 0.2s}
+.c-btn-main{background:var(--c1);color:white}
+.c-btn-main:hover{opacity:0.9}
+.c-btn-out{border:1.5px solid var(--border);color:var(--muted)}
+.c-btn-out:hover{border-color:var(--c1);color:var(--c1)}
+.c-btn .t{font-size:0.9rem;font-weight:600;display:block}
+.c-btn .s{font-size:0.65rem;opacity:0.6;text-transform:uppercase;letter-spacing:0.06em}
+footer{background:var(--c1);color:rgba(255,255,255,0.3);padding:2rem;text-align:center;font-size:0.75rem}
+footer span{color:var(--c3)}
+.mobile-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--c1);border-top:2px solid var(--c2);padding:0.7rem 1rem;z-index:200}
+.mobile-bar a{display:block;background:var(--c3);color:var(--c1);text-align:center;padding:0.8rem;border-radius:6px;font-weight:700;text-decoration:none}
+@media(max-width:768px){
+  .mobile-bar{display:block}
+  body{padding-bottom:70px}
+  .hero h1{font-size:2rem}
+  .contact-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-bar">
+  <a href="tel:${tel1.replace(/\s/g,'')}">📞 ${tel1}</a>
+</div>
+
+<nav>
+  <a href="#" class="logo">${nom}</a>
+  <a href="tel:${tel1.replace(/\s/g,'')}" class="nav-tel">📞 ${tel1}</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="s-label">${d.metier} ${d.ville}</div>
+    <h1>${nom.split(' ').slice(0,2).join(' ')}<br><em>${nom.split(' ').slice(2).join(' ') || d.metier}</em></h1>
+    <div class="slogan">${slogan}</div>
+    <p>${hero}</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-main">Demander un devis</a>
+      <a href="#services" class="btn-ghost">Nos services</a>
+    </div>
+  </div>
+</div>
+
+<section id="services" style="background:white">
+  <div class="section-inner">
+    <div class="s-label">Ce qu'on fait</div>
+    <h2>Nos services</h2>
+    <div class="services-grid">
+      ${services.map(s => `<div class="srv"><h3>${s}</h3><p>${d.metier} professionnel à ${d.ville} — devis gratuit sur place.</p></div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section id="histoire" style="background:var(--c4)">
+  <div class="section-inner" style="max-width:700px">
+    <div class="s-label">Notre histoire</div>
+    <h2>Qui sommes-nous ?</h2>
+    <p style="color:var(--muted);line-height:2;font-size:0.95rem">${histoire}</p>
+    ${d.exp ? `<p style="margin-top:1rem;font-size:0.88rem;color:var(--muted)"><strong style="color:var(--c1)">${d.exp} ans d'expérience</strong> ${d.spec ? '· ' + d.spec : ''} à ${d.ville}.</p>` : ''}
+  </div>
+</section>
+
+<section id="contact" style="background:white">
+  <div class="section-inner">
+    <div class="s-label">Nous contacter</div>
+    <h2>Devis gratuit & contact</h2>
+    <div class="contact-grid">
+      <div>
+        ${d.tel1 ? `<a href="tel:${d.tel1.replace(/\s/g,'')}" class="c-btn c-btn-main"><span>📞</span><div><span class="s">Téléphone</span><span class="t">${d.tel1}</span></div></a>` : ''}
+        ${d.tel2 ? `<a href="tel:${d.tel2.replace(/\s/g,'')}" class="c-btn c-btn-main"><span>📱</span><div><span class="s">Mobile · Urgences</span><span class="t">${d.tel2}</span></div></a>` : ''}
+        ${d.email ? `<a href="mailto:${d.email}" class="c-btn c-btn-out"><span>✉️</span><div><span class="s">Email</span><span class="t">${d.email}</span></div></a>` : ''}
+        ${d.adresse ? `<div class="c-btn c-btn-out"><span>📍</span><div><span class="s">Adresse</span><span class="t" style="font-size:0.85rem">${d.adresse}</span></div></div>` : ''}
+        ${d.zone ? `<div class="c-btn c-btn-out"><span>🗺️</span><div><span class="s">Zone d'intervention</span><span class="t" style="font-size:0.82rem">${d.zone}</span></div></div>` : ''}
+      </div>
+      <div style="background:var(--c4);border:1px solid var(--border);border-radius:10px;padding:1.5rem">
+        <h3 style="font-family:'Playfair Display',serif;color:var(--c1);margin-bottom:1.2rem">Demande de devis gratuit</h3>
+        <form action="https://formspree.io/f/VOTRE_ID_FORMSPREE" method="POST">
+          <input type="text" name="nom" placeholder="Votre nom *" required style="width:100%;padding:0.7rem;margin-bottom:0.6rem;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:0.85rem;background:white"/><br>
+          <input type="tel" name="tel" placeholder="Votre téléphone *" required style="width:100%;padding:0.7rem;margin-bottom:0.6rem;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:0.85rem;background:white"/><br>
+          <textarea name="message" placeholder="Décrivez votre besoin..." rows="4" required style="width:100%;padding:0.7rem;margin-bottom:0.6rem;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:0.85rem;resize:vertical;background:white"></textarea>
+          <button type="submit" style="width:100%;background:var(--c1);color:white;padding:0.9rem;border:none;border-radius:6px;font-weight:700;font-size:0.9rem;cursor:pointer;font-family:'Inter',sans-serif">Envoyer →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><span>${nom}</span> · ${d.ville}</p>
+  ${d.siret ? `<p style="margin-top:0.5rem;font-size:0.7rem">SIRET : ${d.siret}</p>` : ''}
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(el=>{if(el.isIntersecting)el.target.style.opacity=1}),{threshold:0.1});
+</sc`+'ript>\n</body>\n</html>';
+}
+
+// ═══════════════════════════════════════════════════
+// NOTIFICATION TOAST
+// ═══════════════════════════════════════════════════
+let notifTimer;
+function notify(msg) {
+  const el = document.getElementById('notif');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(notifTimer);
+  notifTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// Init au chargement
+document.addEventListener('DOMContentLoaded', () => {
+  updateSearchButtons();
+});
+</script>
+</body>
+</html>
