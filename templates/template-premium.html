@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{NOM_ENTREPRISE}} — {{METIER}} {{VILLE}}</title>
+<meta name="description" content="{{META_DESC}}">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   VARIABLES — générées par le générateur
+═══════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --c1:{{COLOR_1}};
+  --c2:{{COLOR_2}};
+  --c3:{{COLOR_3}};
+  --bg:{{COLOR_BG}};
+  --text:#0F1117;
+  --muted:#52525B;
+  --border:#E4E4E7;
+  --surface:#FFFFFF;
+  --surface2:#F8F8F9;
+}
+
+/* ═══════════════════════════════════════
+   BASE
+═══════════════════════════════════════ */
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1;
+}
+a{text-decoration:none}
+img{display:block;max-width:100%}
+
+/* ═══════════════════════════════════════
+   DEMO BADGE — discret mais visible
+═══════════════════════════════════════ */
+.demo-band{
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  background:#FEF9C3;
+  border:1px solid #FDE047;
+  border-radius:4px;
+  padding:0.4rem 0.8rem;
+  font-size:0.68rem;
+  font-weight:600;
+  color:#854D0E;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-bottom:1.2rem;
+  width:fit-content;
+}
+.demo-band::before{
+  content:'';
+  width:6px;height:6px;
+  background:#EAB308;
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--c1);
+  padding:0 2rem;
+  height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:0.8rem;
+}
+.nav-logo-mark{
+  width:32px;height:32px;
+  background:var(--c3);
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.nav-logo-mark svg{width:18px;height:18px;fill:var(--c1)}
+.nav-logo-text .n{
+  font-family:'Playfair Display',serif;
+  font-size:0.9rem;font-weight:600;
+  color:#fff;display:block;line-height:1.1;
+}
+.nav-logo-text .s{
+  font-size:0.6rem;
+  color:rgba(255,255,255,0.35);
+  letter-spacing:0.12em;text-transform:uppercase;
+}
+.nav-links{
+  display:flex;gap:0;list-style:none;
+}
+.nav-links a{
+  color:rgba(255,255,255,0.45);
+  font-size:0.75rem;
+  padding:0.4rem 0.9rem;
+  border-radius:4px;
+  transition:all 0.2s;
+  white-space:nowrap;
+}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,0.07)}
+.nav-cta{
+  background:var(--c3);
+  color:var(--c1);
+  padding:0.55rem 1.1rem;
+  border-radius:4px;
+  font-size:0.78rem;font-weight:700;
+  transition:opacity 0.2s;
+  white-space:nowrap;
+}
+.nav-cta:hover{opacity:0.88}
+
+/* ═══════════════════════════════════════
+   BARRE MOBILE COLLANTE
+═══════════════════════════════════════ */
+.mobile-bar{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:var(--c1);
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:0.7rem 1rem;
+  gap:0.5rem;
+}
+.mobile-bar a{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;
+  padding:0.8rem;border-radius:6px;
+  font-weight:700;font-size:0.88rem;
+  transition:opacity 0.2s;
+}
+.mobile-bar-main{background:var(--c3);color:var(--c1)}
+.mobile-bar-sec{
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.7);
+}
+@media(max-width:768px){
+  .mobile-bar{display:flex}
+  body{padding-bottom:76px}
+  .nav-links{display:none}
+}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero{
+  background:var(--c1);
+  min-height:88vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 2rem 6rem;
+  position:relative;overflow:hidden;
+}
+
+/* Texture subtile — grille de points */
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.04) 1px,transparent 1px);
+  background-size:28px 28px;
+  pointer-events:none;
+}
+
+/* Cercle décoratif flou en arrière plan */
+.hero-glow{
+  position:absolute;
+  width:600px;height:600px;
+  background:var(--c2);
+  opacity:0.06;
+  border-radius:50%;
+  right:-200px;top:-150px;
+  pointer-events:none;
+  filter:blur(80px);
+}
+
+.hero-inner{
+  max-width:1040px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1.15fr 0.85fr;gap:5rem;align-items:center;
+  position:relative;z-index:1;
+}
+
+.hero-eyebrow{
+  font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--c2);margin-bottom:1.4rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.hero-eyebrow::before{
+  content:'';width:20px;height:1px;background:var(--c2);flex-shrink:0;
+}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:3.6rem;font-weight:400;
+  color:#fff;line-height:1.04;
+  margin-bottom:0.8rem;
+  letter-spacing:-0.02em;
+}
+.hero h1 em{
+  color:var(--c3);font-style:italic;
+}
+
+.hero-slogan{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;font-style:italic;
+  color:rgba(255,255,255,0.4);
+  margin-bottom:1.8rem;
+  line-height:1.4;
+}
+
+.hero-desc{
+  font-size:0.9rem;
+  color:rgba(255,255,255,0.5);
+  line-height:1.95;
+  margin-bottom:2.2rem;
+  font-weight:300;
+  max-width:440px;
+}
+
+/* Badge disponibilité */
+.hero-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px;padding:0.35rem 0.9rem;
+  font-size:0.7rem;color:rgba(255,255,255,0.5);
+  margin-bottom:1.6rem;
+}
+.badge-dot{
+  width:6px;height:6px;
+  background:#4ADE80;border-radius:50%;
+  animation:pulse 2s infinite;
+  flex-shrink:0;
+}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,0.4)}50%{opacity:0.8;box-shadow:0 0 0 4px rgba(74,222,128,0)}}
+
+.hero-btns{display:flex;gap:0.8rem;flex-wrap:wrap}
+.btn-hero-main{
+  background:var(--c3);color:var(--c1);
+  padding:0.9rem 1.8rem;border-radius:3px;
+  font-weight:700;font-size:0.88rem;
+  transition:all 0.2s;
+  letter-spacing:0.01em;
+}
+.btn-hero-main:hover{opacity:0.9;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.2)}
+.btn-hero-ghost{
+  border:1px solid rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.55);
+  padding:0.9rem 1.8rem;border-radius:3px;
+  font-size:0.88rem;
+  transition:all 0.2s;
+}
+.btn-hero-ghost:hover{border-color:rgba(255,255,255,0.35);color:rgba(255,255,255,0.8)}
+
+/* Côté droit du hero — contacts */
+.hero-right{display:flex;flex-direction:column;gap:0.6rem}
+.hero-contact-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:8px;overflow:hidden;
+}
+.hero-contact-card-header{
+  padding:0.6rem 1rem;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);
+}
+.hero-tel-item{
+  display:flex;align-items:center;gap:0.8rem;
+  padding:0.85rem 1rem;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  transition:background 0.2s;
+}
+.hero-tel-item:last-child{border-bottom:none}
+.hero-tel-item:hover{background:rgba(255,255,255,0.04)}
+.tel-icon{
+  width:28px;height:28px;
+  background:rgba(255,255,255,0.06);
+  border-radius:5px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.tel-icon svg{width:13px;height:13px;stroke:var(--c3);fill:none;stroke-width:2;stroke-linecap:round}
+.tel-info .num{
+  font-size:0.9rem;font-weight:600;
+  color:rgba(255,255,255,0.85);display:block;
+}
+.tel-info .lab{
+  font-size:0.62rem;color:rgba(255,255,255,0.28);
+  letter-spacing:0.07em;text-transform:uppercase;
+}
+
+.hero-stat-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;
+}
+.hero-stat{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:8px;
+  padding:1rem;text-align:center;
+}
+.hero-stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem;font-weight:600;
+  color:var(--c3);display:block;line-height:1;
+}
+.hero-stat-lab{
+  font-size:0.62rem;color:rgba(255,255,255,0.3);
+  letter-spacing:0.08em;text-transform:uppercase;
+  margin-top:0.3rem;display:block;
+}
+
+/* ═══════════════════════════════════════
+   BANDE CONFIANCE
+═══════════════════════════════════════ */
+.trust-band{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:1rem 2rem;
+  display:flex;align-items:center;justify-content:center;
+  gap:2.5rem;flex-wrap:wrap;
+}
+.trust-item{
+  display:flex;align-items:center;gap:0.5rem;
+  font-size:0.75rem;color:var(--muted);font-weight:400;
+}
+.trust-item::before{
+  content:'';
+  width:4px;height:4px;
+  background:var(--c2);
+  border-radius:50%;flex-shrink:0;
+}
+
+/* ═══════════════════════════════════════
+   SECTIONS — base commune
+═══════════════════════════════════════ */
+.s-eyebrow{
+  font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--c2);margin-bottom:0.6rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.s-eyebrow::before{
+  content:'';width:16px;height:1px;background:var(--c2);flex-shrink:0;
+}
+.s-title{
+  font-family:'Playfair Display',serif;
+  font-size:2.2rem;font-weight:400;
+  color:var(--c1);margin-bottom:0.5rem;
+  letter-spacing:-0.01em;line-height:1.15;
+}
+.s-title em{font-style:italic;color:var(--c2)}
+.s-sub{
+  font-size:0.85rem;color:var(--muted);
+  line-height:1.7;margin-bottom:0;font-weight:300;
+}
+.s-line{
+  width:28px;height:1.5px;
+  background:var(--c2);
+  margin:0.8rem 0 2.5rem;
+  border-radius:2px;
+}
+.section-inner{max-width:1060px;margin:0 auto}
+
+/* ═══════════════════════════════════════
+   SERVICES
+═══════════════════════════════════════ */
+.services-section{
+  background:var(--surface);
+  padding:5.5rem 2rem;
+}
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+}
+.srv-card{
+  background:var(--surface);
+  padding:1.8rem 1.5rem;
+  transition:background 0.25s;
+  position:relative;
+}
+.srv-card:hover{background:var(--surface2)}
+.srv-card::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:2px;
+  background:var(--c2);
+  transform:scaleX(0);
+  transition:transform 0.3s;
+  transform-origin:left;
+}
+.srv-card:hover::after{transform:scaleX(1)}
+
+/* Icône SVG — PAS d'emoji */
+.srv-icon{
+  width:36px;height:36px;
+  background:color-mix(in srgb,var(--c1) 8%,transparent);
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1rem;
+  transition:background 0.25s;
+}
+.srv-card:hover .srv-icon{background:color-mix(in srgb,var(--c2) 12%,transparent)}
+.srv-icon svg{width:17px;height:17px;stroke:var(--c1);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.srv-urgent{
+  display:inline-block;
+  font-size:0.55rem;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;
+  background:var(--c1);color:#fff;
+  padding:0.1rem 0.45rem;border-radius:2px;
+  margin-bottom:0.5rem;
+}
+.srv-card h3{
+  font-size:0.88rem;font-weight:600;
+  color:var(--c1);margin-bottom:0.4rem;
+  line-height:1.3;
+}
+.srv-card p{
+  font-size:0.75rem;color:var(--muted);
+  line-height:1.65;
+}
+
+/* ═══════════════════════════════════════
+   HISTOIRE / À PROPOS
+═══════════════════════════════════════ */
+.histoire-section{
+  background:var(--bg);
+  padding:5.5rem 2rem;
+}
+.histoire-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5rem;
+  align-items:center;
+}
+.histoire-text p{
+  font-size:0.88rem;color:var(--muted);
+  line-height:2;margin-bottom:1rem;font-weight:300;
+}
+.histoire-text p strong{color:var(--text);font-weight:500}
+.famille-bloc{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:3px solid var(--c2);
+  border-radius:0 6px 6px 0;
+  padding:1.1rem 1.3rem;
+  margin-top:1.5rem;
+}
+.famille-bloc p{
+  font-size:0.8rem;color:var(--muted);
+  line-height:1.7;margin:0;
+}
+.famille-bloc p strong{color:var(--c1);font-weight:600}
+
+/* Chiffres à droite */
+.histoire-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+}
+.h-stat{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.5rem;
+  text-align:center;
+}
+.h-stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;font-weight:400;
+  color:var(--c1);display:block;line-height:1;
+}
+.h-stat-lab{
+  font-size:0.68rem;color:var(--muted);
+  letter-spacing:0.08em;text-transform:uppercase;
+  margin-top:0.4rem;display:block;
+}
+.syndics-bloc{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.2rem;
+  grid-column:1/-1;
+}
+.syndics-label{
+  font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.7rem;
+}
+.syndics-tags{display:flex;flex-wrap:wrap;gap:0.4rem}
+.syn-tag{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:20px;padding:0.2rem 0.65rem;
+  font-size:0.7rem;color:var(--c1);font-weight:500;
+}
+
+/* ═══════════════════════════════════════
+   AVIS CLIENTS — avec bandeaux DÉMO
+═══════════════════════════════════════ */
+.avis-section{
+  background:var(--surface);
+  padding:5.5rem 2rem;
+}
+.avis-note-row{
+  display:flex;align-items:center;gap:1.5rem;
+  margin-bottom:2.5rem;flex-wrap:wrap;
+}
+.avis-note-big{
+  font-family:'Playfair Display',serif;
+  font-size:3.5rem;font-weight:400;
+  color:var(--c1);line-height:1;
+}
+.avis-note-details .stars{
+  display:flex;gap:2px;margin-bottom:0.2rem;
+}
+.star-svg{width:14px;height:14px;fill:var(--c3)}
+.avis-note-details .lab{font-size:0.72rem;color:var(--muted)}
+.avis-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1rem;
+}
+.avis-card{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.6rem;
+  position:relative;
+  transition:all 0.3s;
+}
+.avis-card:hover{
+  border-color:var(--c2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.05);
+}
+.avis-quote-mark{
+  position:absolute;top:1rem;right:1.2rem;
+  font-family:'Playfair Display',serif;
+  font-size:3.5rem;
+  color:var(--border);
+  line-height:1;
+  pointer-events:none;
+  user-select:none;
+}
+.avis-card-stars{display:flex;gap:2px;margin-bottom:0.9rem}
+.avis-card blockquote{
+  font-family:'Playfair Display',serif;
+  font-size:0.88rem;font-style:italic;
+  color:var(--muted);line-height:1.8;
+  margin-bottom:1.2rem;
+}
+.avis-footer{display:flex;align-items:center;gap:0.7rem}
+.avis-avatar{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--c1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.65rem;font-weight:700;color:#fff;flex-shrink:0;
+}
+.avis-author{font-size:0.78rem;font-weight:600;color:var(--c1)}
+.avis-loc{font-size:0.67rem;color:var(--muted)}
+
+/* ═══════════════════════════════════════
+   ZONE D'INTERVENTION
+═══════════════════════════════════════ */
+.zone-section{
+  background:var(--bg);
+  padding:5.5rem 2rem;
+}
+.zone-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3rem;align-items:start;
+}
+.zone-list{display:flex;flex-direction:column;gap:0.8rem}
+.zone-bloc{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.2rem 1.4rem;
+  transition:all 0.25s;
+}
+.zone-bloc:hover{border-color:var(--c2)}
+.zone-bloc-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:0.7rem;
+}
+.zone-bloc-title{font-size:0.85rem;font-weight:600;color:var(--c1)}
+.zone-badge{
+  font-size:0.58rem;font-weight:700;
+  letter-spacing:0.07em;text-transform:uppercase;
+  background:color-mix(in srgb,var(--c1) 8%,transparent);
+  color:var(--c2);
+  padding:0.15rem 0.55rem;border-radius:10px;
+}
+.zone-tags{display:flex;flex-wrap:wrap;gap:0.35rem}
+.zone-tag{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:20px;padding:0.18rem 0.6rem;
+  font-size:0.7rem;color:var(--c1);font-weight:500;
+  transition:all 0.2s;cursor:default;
+}
+.zone-tag:hover{background:var(--c1);color:#fff;border-color:var(--c1)}
+
+/* Carte map placeholder élégante */
+.zone-map{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  aspect-ratio:4/3;
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0.8rem;
+}
+.zone-map-bg{
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(0deg,var(--border) 0,var(--border) 1px,transparent 1px,transparent 40px),
+    repeating-linear-gradient(90deg,var(--border) 0,var(--border) 1px,transparent 1px,transparent 40px);
+  opacity:0.5;
+}
+.zone-map-pin{
+  position:relative;z-index:1;
+  width:44px;height:44px;
+  background:var(--c1);
+  border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);
+  display:flex;align-items:center;justify-content:center;
+}
+.zone-map-pin::after{
+  content:'';
+  width:14px;height:14px;
+  background:#fff;border-radius:50%;
+}
+.zone-map-addr{
+  position:relative;z-index:1;
+  font-size:0.78rem;color:var(--muted);
+  text-align:center;line-height:1.5;
+}
+.zone-map-cta{
+  position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);
+  background:var(--c1);color:#fff;
+  padding:0.55rem 1.1rem;border-radius:4px;
+  font-size:0.75rem;font-weight:600;
+  white-space:nowrap;transition:opacity 0.2s;z-index:1;
+}
+.zone-map-cta:hover{opacity:0.88}
+
+/* ═══════════════════════════════════════
+   HORAIRES — avec bandeau DÉMO
+═══════════════════════════════════════ */
+.horaires-section{
+  background:var(--c1);
+  padding:5rem 2rem;
+}
+.horaires-inner{max-width:1060px;margin:0 auto}
+.horaires-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3rem;align-items:start;
+}
+.horaires-table{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:8px;
+  overflow:hidden;
+}
+.h-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.7rem 1.1rem;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:0.82rem;
+}
+.h-row:last-child{border-bottom:none}
+.h-day{color:rgba(255,255,255,0.65);font-weight:400}
+.h-time{color:rgba(255,255,255,0.85);font-weight:500}
+.h-closed{color:rgba(255,255,255,0.25);font-style:italic}
+.h-today{background:rgba(255,255,255,0.04)}
+.h-today .h-day{color:var(--c3);font-weight:600}
+.horaires-info{
+  display:flex;flex-direction:column;gap:0.8rem;
+}
+.h-info-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:8px;
+  padding:1.2rem;
+}
+.h-info-label{
+  font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);margin-bottom:0.5rem;
+}
+.h-info-val{font-size:0.88rem;color:rgba(255,255,255,0.7);line-height:1.6}
+.h-info-val strong{color:#fff}
+
+/* ═══════════════════════════════════════
+   CONTACT & FORMULAIRE
+═══════════════════════════════════════ */
+.contact-section{
+  background:var(--bg);
+  padding:5.5rem 2rem;
+}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3rem;align-items:start;
+}
+.contact-infos{display:flex;flex-direction:column;gap:0.7rem}
+.c-item{
+  display:flex;align-items:center;gap:0.9rem;
+  padding:1rem 1.2rem;
+  border-radius:6px;
+  transition:all 0.2s;
+}
+.c-item-filled{background:var(--c1);color:#fff}
+.c-item-filled:hover{opacity:0.9;transform:translateY(-1px)}
+.c-item-outline{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--muted);
+}
+.c-item-outline:hover{border-color:var(--c1);color:var(--c1)}
+.c-icon{
+  width:34px;height:34px;flex-shrink:0;
+  background:rgba(255,255,255,0.1);
+  border-radius:5px;
+  display:flex;align-items:center;justify-content:center;
+}
+.c-item-outline .c-icon{background:var(--bg)}
+.c-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round}
+.c-text .lab{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.5;display:block}
+.c-text .val{font-size:0.88rem;font-weight:600;display:block}
+
+/* Formulaire */
+.contact-form-wrap{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:2rem;
+}
+.form-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:400;
+  color:var(--c1);margin-bottom:1.5rem;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:0.7rem}
+.f-group{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:0.7rem}
+.f-group label{font-size:0.68rem;font-weight:500;color:var(--muted);letter-spacing:0.04em}
+.f-group input,.f-group select,.f-group textarea{
+  background:var(--bg);
+  border:1.5px solid var(--border);
+  border-radius:5px;
+  padding:0.65rem 0.85rem;
+  font-size:0.84rem;color:var(--text);
+  font-family:'Inter',sans-serif;
+  outline:none;
+  transition:border-color 0.2s;
+}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--c1)}
+.f-group textarea{min-height:90px;resize:vertical}
+.f-submit{
+  width:100%;
+  background:var(--c1);color:#fff;
+  border:none;border-radius:5px;
+  padding:0.9rem;
+  font-size:0.88rem;font-weight:600;
+  cursor:pointer;font-family:'Inter',sans-serif;
+  transition:all 0.2s;
+  letter-spacing:0.02em;
+}
+.f-submit:hover{opacity:0.9;transform:translateY(-1px)}
+.form-ok{
+  display:none;margin-top:0.8rem;
+  background:#F0FDF4;border:1px solid #BBF7D0;
+  border-radius:5px;padding:0.7rem 1rem;
+  font-size:0.82rem;color:#166534;text-align:center;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{
+  background:var(--c1);
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding:2rem;
+}
+.footer-inner{
+  max-width:1060px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-brand{
+  font-family:'Playfair Display',serif;
+  font-size:0.88rem;color:rgba(255,255,255,0.4);
+}
+.footer-brand span{color:var(--c3)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{
+  color:rgba(255,255,255,0.25);
+  font-size:0.72rem;transition:color 0.2s;
+}
+.footer-links a:hover{color:var(--c3)}
+.footer-legal{font-size:0.68rem;color:rgba(255,255,255,0.15)}
+
+/* ═══════════════════════════════════════
+   ANIMATIONS SCROLL
+═══════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-l{opacity:0;transform:translateX(-22px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal-l.visible{opacity:1;transform:translateX(0)}
+.reveal-r{opacity:0;transform:translateX(22px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal-r.visible{opacity:1;transform:translateX(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero-eyebrow{animation:fadeUp 0.5s ease both}
+.hero h1{animation:fadeUp 0.6s 0.1s ease both}
+.hero-slogan{animation:fadeUp 0.6s 0.15s ease both}
+.hero-badge{animation:fadeUp 0.6s 0.2s ease both}
+.hero-desc{animation:fadeUp 0.6s 0.22s ease both}
+.hero-btns{animation:fadeUp 0.6s 0.3s ease both}
+.hero-right{animation:fadeUp 0.7s 0.4s ease both}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:768px){
+  .hero-inner,.histoire-grid,.horaires-grid,.contact-grid,.zone-grid{
+    grid-template-columns:1fr;gap:2rem;
+  }
+  .hero h1{font-size:2.4rem}
+  .avis-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr 1fr}
+  nav{padding:0 1rem}
+  .hero{padding:4rem 1.2rem 5rem}
+  section{padding-left:1.2rem;padding-right:1.2rem}
+}
+@media(max-width:480px){
+  .services-grid{grid-template-columns:1fr}
+  .hero-stat-row{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .histoire-stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- BARRE MOBILE COLLANTE -->
+<div class="mobile-bar">
+  <a href="tel:{{TEL_1_RAW}}" class="mobile-bar-main">{{TEL_1}}</a>
+  <a href="tel:{{TEL_2_RAW}}" class="mobile-bar-sec">Urgence</a>
+</div>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <!-- SVG adapté au métier injecté par le générateur -->
+      <svg viewBox="0 0 24 24"><path d="M12 2C12 2 6 10 6 14a6 6 0 0012 0C18 10 12 2 12 2z"/></svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="n">{{NOM_ENTREPRISE}}</span>
+      <span class="s">{{METIER}} · {{VILLE}}</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#histoire">Notre histoire</a></li>
+    <li><a href="#avis">Avis clients</a></li>
+    <li><a href="#zone">Zone</a></li>
+    <li><a href="#contact">Devis gratuit</a></li>
+  </ul>
+  <a href="tel:{{TEL_1_RAW}}" class="nav-cta">{{TEL_1}}</a>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">{{METIER}} {{VILLE}} · {{SPEC}}</div>
+      <h1>{{NOM_LIGNE_1}}<br><em>{{NOM_LIGNE_2}}</em></h1>
+      <p class="hero-slogan">{{SLOGAN}}</p>
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Devis gratuit — intervention rapide à {{VILLE}}
+      </div>
+      <p class="hero-desc">{{DESCRIPTION_HERO}}</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-hero-main">Demander un devis</a>
+        <a href="#services" class="btn-hero-ghost">Nos services</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-contact-card">
+        <div class="hero-contact-card-header">Nous joindre</div>
+        <a href="tel:{{TEL_1_RAW}}" class="hero-tel-item" style="display:flex;text-decoration:none;color:inherit">
+          <div class="tel-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.42 12 19.79 19.79 0 011.35 3.49 2 2 0 013.33 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="tel-info">
+            <span class="num">{{TEL_1}}</span>
+            <span class="lab">Ligne principale</span>
+          </div>
+        </a>
+        <a href="tel:{{TEL_2_RAW}}" class="hero-tel-item" style="display:flex;text-decoration:none;color:inherit">
+          <div class="tel-icon">
+            <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2"/></svg>
+          </div>
+          <div class="tel-info">
+            <span class="num">{{TEL_2}}</span>
+            <span class="lab">Mobile · Urgences</span>
+          </div>
+        </a>
+        <a href="mailto:{{EMAIL}}" class="hero-tel-item" style="display:flex;text-decoration:none;color:inherit">
+          <div class="tel-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="tel-info">
+            <span class="num" style="font-size:0.75rem">{{EMAIL}}</span>
+            <span class="lab">Email</span>
+          </div>
+        </a>
+      </div>
+      <div class="hero-stat-row">
+        <div class="hero-stat">
+          <span class="hero-stat-num">{{EXP}}+</span>
+          <span class="hero-stat-lab">Ans d'expérience</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">5.0</span>
+          <span class="hero-stat-lab">Note Google</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BANDE CONFIANCE -->
+<div class="trust-band">
+  <div class="trust-item">Devis gratuit sur place</div>
+  <div class="trust-item">Intervention rapide</div>
+  <div class="trust-item">{{SPEC}}</div>
+  <div class="trust-item">{{VILLE}} &amp; alentours</div>
+  <div class="trust-item">Garantie satisfaction</div>
+</div>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<section class="services-section reveal" id="services">
+  <div class="section-inner">
+    <div class="s-eyebrow">Ce qu'on fait</div>
+    <h2 class="s-title">Nos <em>services</em></h2>
+    <p class="s-sub">De la petite réparation à la rénovation complète — un seul numéro suffit</p>
+    <div class="s-line"></div>
+    <div class="services-grid">
+
+      <!-- Service 1 — URGENT -->
+      <div class="srv-card">
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="srv-urgent">Urgent</div>
+        <h3>{{SERVICE_1}}</h3>
+        <p>{{SERVICE_1_DESC}}</p>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="srv-card">
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
+        </div>
+        <h3>{{SERVICE_2}}</h3>
+        <p>{{SERVICE_2_DESC}}</p>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="srv-card">
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+        </div>
+        <h3>{{SERVICE_3}}</h3>
+        <p>{{SERVICE_3_DESC}}</p>
+      </div>
+
+      <!-- Service 4 -->
+      <div class="srv-card">
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+        </div>
+        <h3>{{SERVICE_4}}</h3>
+        <p>{{SERVICE_4_DESC}}</p>
+      </div>
+
+      <!-- Service 5 — URGENT -->
+      <div class="srv-card">
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4M12 16h.01" stroke-width="2"/></svg>
+        </div>
+        <div class="srv-urgent">Urgent</div>
+        <h3>{{SERVICE_5}}</h3>
+        <p>{{SERVICE_5_DESC}}</p>
+      </div>
+
+      <!-- Service 6 -->
+      <div class="srv-card">
+        <div class="srv-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>{{SERVICE_6}}</h3>
+        <p>{{SERVICE_6_DESC}}</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HISTOIRE ═══════════════ -->
+<section class="histoire-section" id="histoire">
+  <div class="section-inner">
+    <div class="histoire-grid">
+      <div class="histoire-text reveal-l">
+        <div class="s-eyebrow">Notre histoire</div>
+        <h2 class="s-title">Une <em>passion</em><br>depuis le début</h2>
+        <div class="s-line"></div>
+        <p>{{HISTOIRE_P1}}</p>
+        <p>{{HISTOIRE_P2}}</p>
+        <div class="famille-bloc">
+          <p>{{FAMILLE_DESC}}</p>
+        </div>
+      </div>
+      <div class="reveal-r">
+        <div class="histoire-stats">
+          <div class="h-stat">
+            <span class="h-stat-num">{{EXP}}</span>
+            <span class="h-stat-lab">Ans d'expérience</span>
+          </div>
+          <div class="h-stat">
+            <span class="h-stat-num">5.0</span>
+            <span class="h-stat-lab">Note Google</span>
+          </div>
+          <div class="h-stat">
+            <span class="h-stat-num">{{VILLE_SHORT}}</span>
+            <span class="h-stat-lab">Zone principale</span>
+          </div>
+          <div class="h-stat">
+            <span class="h-stat-num">Devis</span>
+            <span class="h-stat-lab">Gratuit sur place</span>
+          </div>
+          <!-- Syndics / partenaires — optionnel -->
+          <div class="syndics-bloc">
+            <div class="syndics-label">Ils nous font confiance</div>
+            <div class="syndics-tags">
+              <span class="syn-tag">{{PARTENAIRE_1}}</span>
+              <span class="syn-tag">{{PARTENAIRE_2}}</span>
+              <span class="syn-tag">{{PARTENAIRE_3}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ AVIS ═══════════════ -->
+<section class="avis-section reveal" id="avis">
+  <div class="section-inner">
+    <div class="demo-band">DÉMO — Ces avis sont fictifs, à remplacer par les vrais avis Google</div>
+    <div class="s-eyebrow">Témoignages</div>
+    <h2 class="s-title">Ce que disent<br>nos <em>clients</em></h2>
+    <div class="s-line"></div>
+    <div class="avis-note-row">
+      <div class="avis-note-big">5,0</div>
+      <div class="avis-note-details">
+        <div class="stars">
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="lab">Note moyenne · Google · {{VILLE}}</div>
+      </div>
+    </div>
+    <div class="avis-grid">
+      <div class="avis-card reveal">
+        <div class="avis-quote-mark">"</div>
+        <div class="avis-card-stars">
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>{{AVIS_1}}</blockquote>
+        <div class="avis-footer">
+          <div class="avis-avatar">{{AVIS_1_INITIALES}}</div>
+          <div>
+            <div class="avis-author">{{AVIS_1_NOM}}</div>
+            <div class="avis-loc">{{AVIS_1_LIEU}} · DÉMO</div>
+          </div>
+        </div>
+      </div>
+      <div class="avis-card reveal">
+        <div class="avis-quote-mark">"</div>
+        <div class="avis-card-stars">
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>{{AVIS_2}}</blockquote>
+        <div class="avis-footer">
+          <div class="avis-avatar">{{AVIS_2_INITIALES}}</div>
+          <div>
+            <div class="avis-author">{{AVIS_2_NOM}}</div>
+            <div class="avis-loc">{{AVIS_2_LIEU}} · DÉMO</div>
+          </div>
+        </div>
+      </div>
+      <div class="avis-card reveal">
+        <div class="avis-quote-mark">"</div>
+        <div class="avis-card-stars">
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>{{AVIS_3}}</blockquote>
+        <div class="avis-footer">
+          <div class="avis-avatar">{{AVIS_3_INITIALES}}</div>
+          <div>
+            <div class="avis-author">{{AVIS_3_NOM}}</div>
+            <div class="avis-loc">{{AVIS_3_LIEU}} · DÉMO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ZONE ═══════════════ -->
+<section class="zone-section reveal" id="zone">
+  <div class="section-inner">
+    <div class="s-eyebrow">Où on intervient</div>
+    <h2 class="s-title">Zone <em>d'intervention</em></h2>
+    <p class="s-sub">{{ZONE_LABEL}}</p>
+    <div class="s-line"></div>
+    <div class="zone-grid">
+      <div class="zone-map">
+        <div class="zone-map-bg"></div>
+        <div class="zone-map-pin"></div>
+        <div class="zone-map-addr">{{ADRESSE}}</div>
+        <a href="https://maps.google.com/?q={{ADRESSE_URL}}" target="_blank" class="zone-map-cta">
+          Voir sur Google Maps
+        </a>
+      </div>
+      <div class="zone-list">
+        <div class="zone-bloc reveal-r">
+          <div class="zone-bloc-head">
+            <div class="zone-bloc-title">{{VILLE}} — Notre secteur principal</div>
+            <span class="zone-badge">Prioritaire</span>
+          </div>
+          <div class="zone-tags">
+            <span class="zone-tag">{{QUARTIER_1}}</span>
+            <span class="zone-tag">{{QUARTIER_2}}</span>
+            <span class="zone-tag">{{QUARTIER_3}}</span>
+            <span class="zone-tag">{{QUARTIER_4}}</span>
+          </div>
+        </div>
+        <div class="zone-bloc reveal-r">
+          <div class="zone-bloc-head">
+            <div class="zone-bloc-title">Zones limitrophes</div>
+            <span class="zone-badge">Régulier</span>
+          </div>
+          <div class="zone-tags">
+            <span class="zone-tag">{{ZONE_2_1}}</span>
+            <span class="zone-tag">{{ZONE_2_2}}</span>
+            <span class="zone-tag">{{ZONE_2_3}}</span>
+          </div>
+        </div>
+        <div class="zone-bloc reveal-r">
+          <div class="zone-bloc-head">
+            <div class="zone-bloc-title">Déplacements</div>
+            <span class="zone-badge">Sur demande</span>
+          </div>
+          <div class="zone-tags">
+            <span class="zone-tag">{{ZONE_3_1}}</span>
+            <span class="zone-tag">{{ZONE_3_2}}</span>
+            <span class="zone-tag">{{ZONE_3_3}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HORAIRES ═══════════════ -->
+<section class="horaires-section reveal" id="horaires">
+  <div class="horaires-inner">
+    <div class="demo-band" style="background:rgba(254,249,195,0.1);border-color:rgba(253,224,71,0.2);color:rgba(253,224,71,0.6)">
+      DÉMO — Horaires à remplacer par les vrais
+    </div>
+    <div class="s-eyebrow" style="color:rgba(255,255,255,0.3)">Quand nous trouver</div>
+    <h2 class="s-title" style="color:#fff;margin-bottom:2rem">Nos <em style="color:var(--c3)">horaires</em></h2>
+    <div class="horaires-grid">
+      <div class="horaires-table">
+        <div class="h-row"><span class="h-day">Lundi</span><span class="h-closed">Fermé</span></div>
+        <div class="h-row"><span class="h-day">Mardi — Jeudi</span><span class="h-time">{{H_MAR_JEU}}</span></div>
+        <div class="h-row h-today"><span class="h-day">Vendredi</span><span class="h-time">{{H_VEN}}</span></div>
+        <div class="h-row"><span class="h-day">Samedi</span><span class="h-time">{{H_SAM}}</span></div>
+        <div class="h-row"><span class="h-day">Dimanche</span><span class="h-closed">Fermé</span></div>
+      </div>
+      <div class="horaires-info">
+        <div class="h-info-card">
+          <div class="h-info-label">Urgences</div>
+          <div class="h-info-val">
+            Disponible <strong>7j/7</strong> pour les urgences.<br>
+            Appelez le <strong><a href="tel:{{TEL_2_RAW}}" style="color:var(--c3)">{{TEL_2}}</a></strong>
+          </div>
+        </div>
+        <div class="h-info-card">
+          <div class="h-info-label">Adresse</div>
+          <div class="h-info-val">{{ADRESSE}}</div>
+        </div>
+        <div class="h-info-card">
+          <div class="h-info-label">Devis</div>
+          <div class="h-info-val"><strong>Gratuit</strong> — sur place ou par téléphone</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section class="contact-section reveal" id="contact">
+  <div class="section-inner">
+    <div class="s-eyebrow">Nous contacter</div>
+    <h2 class="s-title">Devis gratuit<br>& <em>contact</em></h2>
+    <div class="s-line"></div>
+    <div class="contact-grid">
+      <div class="contact-infos">
+        <a href="tel:{{TEL_1_RAW}}" class="c-item c-item-filled">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.42 12 19.79 19.79 0 011.35 3.49 2 2 0 013.33 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="c-text">
+            <span class="lab">Ligne principale</span>
+            <span class="val">{{TEL_1}}</span>
+          </div>
+        </a>
+        <a href="tel:{{TEL_2_RAW}}" class="c-item c-item-filled">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2"/></svg>
+          </div>
+          <div class="c-text">
+            <span class="lab">Mobile · Urgences</span>
+            <span class="val">{{TEL_2}}</span>
+          </div>
+        </a>
+        <a href="mailto:{{EMAIL}}" class="c-item c-item-outline">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="c-text">
+            <span class="lab">Email</span>
+            <span class="val" style="font-size:0.8rem">{{EMAIL}}</span>
+          </div>
+        </a>
+        <div class="c-item c-item-outline">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="c-text">
+            <span class="lab">Adresse</span>
+            <span class="val" style="font-size:0.82rem">{{ADRESSE}}</span>
+          </div>
+        </div>
+        <div class="c-item c-item-outline">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="c-text">
+            <span class="lab">Zone d'intervention</span>
+            <span class="val" style="font-size:0.82rem">{{VILLE}} &amp; alentours</span>
+          </div>
+        </div>
+        {{#if SIRET}}
+        <div style="font-size:0.7rem;color:var(--muted);padding:0.5rem 0">SIRET : {{SIRET}}</div>
+        {{/if}}
+      </div>
+
+      <div class="contact-form-wrap">
+        <h3 class="form-title">Demande de devis gratuit</h3>
+        <form id="contact-form" action="{{FORMSPREE_URL}}" method="POST">
+          <div class="form-row">
+            <div class="f-group"><label>Prénom *</label><input type="text" name="prenom" placeholder="Votre prénom" required></div>
+            <div class="f-group"><label>Nom *</label><input type="text" name="nom" placeholder="Votre nom" required></div>
+          </div>
+          <div class="form-row">
+            <div class="f-group"><label>Téléphone *</label><input type="tel" name="telephone" placeholder="06 XX XX XX XX" required></div>
+            <div class="f-group"><label>Email *</label><input type="email" name="email" placeholder="votre@email.fr" required></div>
+          </div>
+          <div class="f-group">
+            <label>Type d'intervention *</label>
+            <select name="type" required>
+              <option value="">Choisissez...</option>
+              <option>{{SERVICE_1}}</option>
+              <option>{{SERVICE_2}}</option>
+              <option>{{SERVICE_3}}</option>
+              <option>{{SERVICE_4}}</option>
+              <option>{{SERVICE_5}}</option>
+              <option>{{SERVICE_6}}</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="f-group"><label>Adresse du chantier</label><input type="text" name="adresse" placeholder="Adresse complète"></div>
+          <div class="f-group"><label>Description *</label><textarea name="message" placeholder="Décrivez votre problème ou votre projet..." required></textarea></div>
+          <button type="submit" class="f-submit">Envoyer ma demande</button>
+          <div class="form-ok" id="form-ok">Votre demande a bien été envoyée — on vous rappelle rapidement.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span>{{NOM_ENTREPRISE}}</span> · {{METIER}} {{VILLE}}</div>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#avis">Avis</a>
+      <a href="#zone">Zone</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-legal">{{#if SIRET}}SIRET {{SIRET}} · {{/if}}© {{ANNEE}} {{NOM_ENTREPRISE}}</div>
+  </div>
+</footer>
+
+<script>
+// ── Scroll reveal ────────────────────────
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 70);
+    }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(el => obs.observe(el));
+
+// ── Formulaire Formspree async ───────────
+const form = document.getElementById('contact-form');
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('.f-submit');
+    btn.textContent = 'Envoi en cours...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
+      if (res.ok) {
+        document.getElementById('form-ok').style.display = 'block';
+        form.reset();
+        btn.textContent = 'Envoyé !';
+      } else {
+        btn.textContent = 'Réessayer';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Réessayer';
+      btn.disabled = false;
+    }
+  });
+}
+</script>
+</body>
+</html>
