@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Base Prospects – Système Auro</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Arial',sans-serif;background:#0d1117;color:#e6edf3;padding:1.5rem}
+
+h1{color:#58a6ff;margin-bottom:0.3rem;font-size:1.4rem}
+.sub{color:#8b949e;font-size:0.82rem;margin-bottom:1.5rem}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:0.8rem;margin-bottom:1.5rem}
+.stat{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:1rem;text-align:center;cursor:pointer;transition:border-color 0.2s}
+.stat:hover{border-color:#58a6ff}
+.stat.active{border-color:#58a6ff;background:#0d2149}
+.stat-big{font-size:1.8rem;font-weight:700;color:#58a6ff}
+.stat-txt{font-size:0.7rem;color:#8b949e;text-transform:uppercase;letter-spacing:0.08em}
+
+/* FORMULAIRE AJOUT */
+.add-form{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:1.2rem;margin-bottom:1.5rem}
+.add-form h2{font-size:0.9rem;color:#f0f6fc;margin-bottom:1rem}
+.form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.6rem;margin-bottom:0.8rem}
+.form-row input,.form-row select{background:#0d1117;border:1px solid #30363d;border-radius:5px;padding:0.55rem 0.7rem;color:#e6edf3;font-size:0.82rem;font-family:Arial,sans-serif;outline:none}
+.form-row input:focus,.form-row select:focus{border-color:#58a6ff}
+.form-row input::placeholder{color:#8b949e}
+.btn-add{background:#238636;color:white;border:none;padding:0.6rem 1.2rem;border-radius:5px;font-size:0.85rem;font-weight:700;cursor:pointer}
+.btn-add:hover{background:#2ea043}
+
+/* FILTRES */
+.filtres{display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.filtre-btn{background:#161b22;border:1px solid #30363d;color:#8b949e;padding:0.35rem 0.8rem;border-radius:20px;font-size:0.72rem;cursor:pointer;transition:all 0.2s}
+.filtre-btn:hover{border-color:#58a6ff;color:#58a6ff}
+.filtre-btn.active{background:#0d2149;border-color:#58a6ff;color:#58a6ff;font-weight:700}
+
+/* TABLE */
+.table-wrap{background:#161b22;border:1px solid #30363d;border-radius:8px;overflow:hidden}
+.table-header{display:flex;justify-content:space-between;align-items:center;padding:0.8rem 1rem;border-bottom:1px solid #30363d;flex-wrap:wrap;gap:0.5rem}
+.table-header h2{font-size:0.9rem;color:#f0f6fc}
+.search{background:#0d1117;border:1px solid #30363d;border-radius:5px;padding:0.4rem 0.7rem;color:#e6edf3;font-size:0.8rem;width:200px;outline:none}
+.search:focus{border-color:#58a6ff}
+table{width:100%;border-collapse:collapse}
+th{background:#0d1117;padding:0.6rem 0.8rem;text-align:left;font-size:0.68rem;color:#8b949e;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid #30363d}
+td{padding:0.65rem 0.8rem;font-size:0.8rem;border-bottom:1px solid #21262d;vertical-align:middle}
+tr:hover td{background:#1c2128}
+tr:last-child td{border-bottom:none}
+
+/* BADGES STATUT */
+.badge{display:inline-block;padding:0.2rem 0.55rem;border-radius:10px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;cursor:pointer;white-space:nowrap}
+.badge-0{background:#3d1f00;color:#f0883e}
+.badge-1{background:#0d2149;color:#58a6ff}
+.badge-2{background:#2d1f00;color:#e3b341}
+.badge-3{background:#1f1235;color:#bc8cff}
+.badge-4{background:#0f2f0f;color:#56d364}
+.badge-5{background:#2d0f0f;color:#f85149}
+
+/* BADGE SITE */
+.badge-site-non{background:#3d1f00;color:#f0883e}
+.badge-site-mauvais{background:#2d2000;color:#e3b341}
+.badge-site-oui{background:#0f2f0f;color:#56d364}
+
+/* NOTES */
+.note-cell{max-width:180px;font-size:0.73rem;color:#8b949e;line-height:1.4}
+.note-cell.vide{color:#30363d;font-style:italic}
+.rappel-badge{display:inline-block;background:#1f1235;color:#bc8cff;font-size:0.62rem;padding:0.15rem 0.45rem;border-radius:8px;margin-top:0.2rem;white-space:nowrap}
+.rappel-badge.today{background:#3d1f00;color:#f0883e}
+.rappel-badge.past{background:#2d0f0f;color:#f85149}
+
+/* ACTIONS */
+.actions-cell{display:flex;gap:0.3rem;flex-wrap:wrap}
+.btn-action{background:none;border:1px solid #30363d;color:#8b949e;padding:0.25rem 0.5rem;border-radius:4px;font-size:0.7rem;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.btn-action:hover{border-color:#58a6ff;color:#58a6ff}
+.btn-msg{border-color:#bc8cff;color:#bc8cff}
+.btn-msg:hover{background:#1f1235;border-color:#bc8cff}
+.btn-site{border-color:#56d364;color:#56d364}
+.btn-site:hover{background:#0f2f0f;border-color:#56d364}
+.btn-note{border-color:#58a6ff;color:#58a6ff}
+.btn-note:hover{background:#0d2149}
+.btn-del{border-color:#f85149;color:#f85149}
+.btn-del:hover{background:#2d0f0f}
+
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.modal.open{display:flex}
+.modal-box{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;width:100%;max-width:580px;max-height:90vh;overflow-y:auto}
+.modal-box h3{color:#f0f6fc;margin-bottom:1rem;font-size:1rem}
+.modal-box textarea{width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:0.8rem;color:#e6edf3;font-size:0.82rem;font-family:Arial,sans-serif;min-height:200px;resize:vertical;outline:none;margin-bottom:0.8rem;line-height:1.6}
+.modal-box textarea:focus{border-color:#58a6ff}
+.modal-btns{display:flex;gap:0.6rem;justify-content:flex-end;flex-wrap:wrap;align-items:center}
+.btn-copy-msg{background:#238636;color:white;border:none;padding:0.6rem 1rem;border-radius:5px;font-size:0.82rem;font-weight:700;cursor:pointer}
+.btn-copy-msg:hover{background:#2ea043}
+.btn-wa{background:#075e54;color:white;border:none;padding:0.6rem 1rem;border-radius:5px;font-size:0.82rem;font-weight:700;cursor:pointer}
+.btn-wa:hover{background:#128c7e}
+.btn-close{background:none;border:1px solid #30363d;color:#8b949e;padding:0.6rem 1rem;border-radius:5px;font-size:0.82rem;cursor:pointer}
+.btn-close:hover{border-color:#f85149;color:#f85149}
+.copied{color:#56d364;font-size:0.75rem}
+
+/* MODAL NOTE */
+.modal-note-box{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;width:100%;max-width:480px}
+.modal-note-box h3{color:#f0f6fc;margin-bottom:1rem;font-size:1rem}
+.f-group{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:0.8rem}
+.f-group label{font-size:0.72rem;color:#8b949e}
+.f-group input,.f-group textarea,.f-group select{background:#0d1117;border:1px solid #30363d;border-radius:5px;padding:0.55rem 0.7rem;color:#e6edf3;font-size:0.82rem;font-family:Arial,sans-serif;outline:none}
+.f-group input:focus,.f-group textarea:focus,.f-group select:focus{border-color:#58a6ff}
+.f-group textarea{min-height:100px;resize:vertical;line-height:1.5}
+.btn-save-note{background:#238636;color:white;border:none;padding:0.6rem 1rem;border-radius:5px;font-size:0.82rem;font-weight:700;cursor:pointer}
+.btn-save-note:hover{background:#2ea043}
+
+/* CANAL TABS */
+.canal-tabs{display:flex;gap:0.4rem;margin-bottom:0.8rem}
+.canal-tab{background:#0d1117;border:1px solid #30363d;color:#8b949e;padding:0.35rem 0.8rem;border-radius:5px;font-size:0.78rem;cursor:pointer;transition:all 0.2s}
+.canal-tab.active{background:#1f1235;border-color:#bc8cff;color:#bc8cff;font-weight:700}
+
+/* VIDE */
+.empty{text-align:center;color:#8b949e;padding:2rem;font-size:0.85rem}
+
+@media(max-width:900px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  table{font-size:0.75rem}
+  .actions-cell{flex-direction:column}
+}
+@media(max-width:600px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<h1>🎯 Base de prospects</h1>
+<p class="sub">Artisans sans site web — à contacter</p>
+
+<!-- STATS cliquables pour filtrer -->
+<div class="stats">
+  <div class="stat" onclick="filtrerStatut(-1)" id="s-all">
+    <div class="stat-big" id="stat-total">0</div>
+    <div class="stat-txt">Tous</div>
+  </div>
+  <div class="stat" onclick="filtrerStatut(0)" id="s-0">
+    <div class="stat-big" id="stat-0">0</div>
+    <div class="stat-txt">À contacter</div>
+  </div>
+  <div class="stat" onclick="filtrerStatut(1)" id="s-1">
+    <div class="stat-big" id="stat-1">0</div>
+    <div class="stat-txt">Contacté</div>
+  </div>
+  <div class="stat" onclick="filtrerStatut(2)" id="s-2">
+    <div class="stat-big" id="stat-2">0</div>
+    <div class="stat-txt">Relance</div>
+  </div>
+  <div class="stat" onclick="filtrerStatut(3)" id="s-3">
+    <div class="stat-big" id="stat-3">0</div>
+    <div class="stat-txt">Négociation</div>
+  </div>
+  <div class="stat" onclick="filtrerStatut(4)" id="s-4">
+    <div class="stat-big" id="stat-4">0</div>
+    <div class="stat-txt">Clients 💰</div>
+  </div>
+</div>
+
+<!-- FORMULAIRE AJOUT -->
+<div class="add-form">
+  <h2>➕ Ajouter un prospect</h2>
+  <div class="form-row">
+    <input type="text" id="f-nom" placeholder="Nom entreprise *">
+    <input type="text" id="f-metier" placeholder="Métier *">
+    <input type="text" id="f-ville" placeholder="Ville *">
+    <input type="text" id="f-tel" placeholder="Téléphone">
+    <input type="text" id="f-email" placeholder="Email">
+    <select id="f-site">
+      <option value="non">❌ Pas de site</option>
+      <option value="mauvais">⚠️ Site mauvais</option>
+      <option value="oui">✅ A déjà un site</option>
+    </select>
+  </div>
+  <button class="btn-add" onclick="ajouterProspect()">➕ Ajouter</button>
+</div>
+
+<!-- TABLE -->
+<div class="table-wrap">
+  <div class="table-header">
+    <h2>📋 Liste des prospects</h2>
+    <input type="text" class="search" placeholder="🔍 Rechercher..." oninput="rechercherProspect(this.value)">
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Entreprise</th>
+        <th>Métier</th>
+        <th>Ville</th>
+        <th>Téléphone</th>
+        <th>Site web</th>
+        <th>Statut</th>
+        <th>Notes & Rappel</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<!-- MODAL MESSAGE -->
+<div class="modal" id="modal-msg">
+  <div class="modal-box">
+    <h3>💬 Message de prospection — <span id="modal-nom"></span></h3>
+    <div class="canal-tabs">
+      <div class="canal-tab active" onclick="changerCanal('email',this)">📧 Email</div>
+      <div class="canal-tab" onclick="changerCanal('whatsapp',this)">💬 WhatsApp</div>
+    </div>
+    <textarea id="modal-textarea"></textarea>
+    <div class="modal-btns">
+      <span class="copied" id="copied" style="display:none">✅ Copié !</span>
+      <button class="btn-wa" onclick="ouvrirWhatsApp()">💬 Ouvrir WhatsApp</button>
+      <button class="btn-copy-msg" onclick="copierMsg()">📋 Copier</button>
+      <button class="btn-close" onclick="fermerModal('modal-msg')">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NOTE -->
+<div class="modal" id="modal-note">
+  <div class="modal-note-box">
+    <h3>📝 Notes — <span id="note-nom"></span></h3>
+    <div class="f-group">
+      <label>Note libre</label>
+      <textarea id="note-texte" placeholder="Ce que tu as dit, ce qu'il a répondu, prochaine étape..."></textarea>
+    </div>
+    <div class="f-group">
+      <label>Date de rappel</label>
+      <input type="date" id="note-rappel">
+    </div>
+    <div class="f-group">
+      <label>Statut</label>
+      <select id="note-statut">
+        <option value="0">🟠 À contacter</option>
+        <option value="1">🔵 Contacté</option>
+        <option value="2">🟡 Relance à faire</option>
+        <option value="3">🟣 En négociation</option>
+        <option value="4">🟢 Client ✅</option>
+        <option value="5">🔴 Pas intéressé</option>
+      </select>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-save-note" onclick="sauvegarderNote()">💾 Sauvegarder</button>
+      <button class="btn-close" onclick="fermerModal('modal-note')">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DONNÉES
+// ═══════════════════════════════════════════════════
+let prospects = JSON.parse(localStorage.getItem('auro-prospects-v2') || '[]');
+
+// Migration depuis l'ancienne version si besoin
+const old = localStorage.getItem('prospects');
+if (old && prospects.length === 0) {
+  try {
+    const anciens = JSON.parse(old);
+    prospects = anciens.map(p => ({...p, note: '', rappel: '', dernierContact: ''}));
+    sauvegarder(false);
+  } catch(e) {}
+}
+
+const STATUTS = [
+  {label:'À contacter', classe:'badge-0'},
+  {label:'Contacté',    classe:'badge-1'},
+  {label:'Relance',     classe:'badge-2'},
+  {label:'Négociation', classe:'badge-3'},
+  {label:'Client ✅',   classe:'badge-4'},
+  {label:'Pas intéressé', classe:'badge-5'},
+];
+
+let filtreStatutActif = -1;
+let rechercheActuelle = '';
+let prospectMsgActif = null;
+let prospectNoteActif = null;
+let canalActif = 'email';
+
+// ═══════════════════════════════════════════════════
+// SAUVEGARDE & AFFICHAGE
+// ═══════════════════════════════════════════════════
+function sauvegarder(reafficher = true) {
+  localStorage.setItem('auro-prospects-v2', JSON.stringify(prospects));
+  if (reafficher) { afficher(); mettreAJourStats(); }
+}
+
+function mettreAJourStats() {
+  document.getElementById('stat-total').textContent = prospects.length;
+  for (let i = 0; i <= 4; i++) {
+    document.getElementById('stat-' + i).textContent = prospects.filter(p => p.statut === i).length;
+  }
+  // Highlight stat active
+  document.querySelectorAll('.stat').forEach(el => el.classList.remove('active'));
+  if (filtreStatutActif === -1) document.getElementById('s-all').classList.add('active');
+  else {
+    const el = document.getElementById('s-' + filtreStatutActif);
+    if (el) el.classList.add('active');
+  }
+}
+
+function afficher() {
+  let data = [...prospects];
+  // Filtre statut
+  if (filtreStatutActif !== -1) data = data.filter(p => p.statut === filtreStatutActif);
+  // Filtre recherche
+  if (rechercheActuelle) {
+    const v = rechercheActuelle.toLowerCase();
+    data = data.filter(p =>
+      p.nom.toLowerCase().includes(v) ||
+      p.metier.toLowerCase().includes(v) ||
+      p.ville.toLowerCase().includes(v) ||
+      (p.note || '').toLowerCase().includes(v)
+    );
+  }
+  const tbody = document.getElementById('tbody');
+  if (data.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" class="empty">Aucun prospect trouvé</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(p => `
+    <tr>
+      <td>
+        <strong style="color:#f0f6fc">${p.nom}</strong><br>
+        <span style="font-size:0.68rem;color:#8b949e">${p.date || ''}</span>
+        ${p.dernierContact ? `<br><span style="font-size:0.65rem;color:#8b949e">Contacté : ${p.dernierContact}</span>` : ''}
+      </td>
+      <td>${p.metier}</td>
+      <td>${p.ville}</td>
+      <td>${p.tel ? `<a href="tel:${p.tel}" style="color:#58a6ff;text-decoration:none">${p.tel}</a>` : '<span style="color:#8b949e">—</span>'}</td>
+      <td>${badgeSite(p.site)}</td>
+      <td>
+        <span class="badge ${STATUTS[p.statut].classe}" onclick="cycleStatut(${p.id})" title="Cliquer pour changer">
+          ${STATUTS[p.statut].label}
+        </span>
+      </td>
+      <td class="note-cell">
+        ${p.note ? `<span title="${p.note}">${p.note.length > 60 ? p.note.slice(0,60)+'…' : p.note}</span>` : '<span class="vide">—</span>'}
+        ${p.rappel ? `<br><span class="rappel-badge ${getRappelClasse(p.rappel)}">📅 ${p.rappel}</span>` : ''}
+      </td>
+      <td>
+        <div class="actions-cell">
+          <button class="btn-action btn-msg" onclick="ouvrirMessage(${p.id})">💬 Message</button>
+          <button class="btn-action btn-note" onclick="ouvrirNote(${p.id})">📝 Notes</button>
+          <button class="btn-action btn-site" onclick="ouvrirGenerateur(${p.id})">🚀 Créer site</button>
+          <button class="btn-action btn-del" onclick="supprimerProspect(${p.id})">🗑️</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════
+function badgeSite(site) {
+  if (site === 'non')    return '<span class="badge badge-site-non">❌ Pas de site</span>';
+  if (site === 'mauvais') return '<span class="badge badge-site-mauvais">⚠️ Site mauvais</span>';
+  return '<span class="badge badge-site-oui">✅ A un site</span>';
+}
+
+function getRappelClasse(rappel) {
+  if (!rappel) return '';
+  const today = new Date().toISOString().slice(0,10);
+  if (rappel < today) return 'past';
+  if (rappel === today) return 'today';
+  return '';
+}
+
+// ═══════════════════════════════════════════════════
+// AJOUTER
+// ═══════════════════════════════════════════════════
+function ajouterProspect() {
+  const nom    = document.getElementById('f-nom').value.trim();
+  const metier = document.getElementById('f-metier').value.trim();
+  const ville  = document.getElementById('f-ville').value.trim();
+  if (!nom || !metier || !ville) { alert('Remplis au moins nom, métier et ville !'); return; }
+
+  prospects.unshift({
+    id: Date.now(),
+    nom, metier, ville,
+    tel:   document.getElementById('f-tel').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    site:  document.getElementById('f-site').value,
+    statut: 0,
+    date: new Date().toLocaleDateString('fr-FR'),
+    note: '',
+    rappel: '',
+    dernierContact: '',
+  });
+
+  ['f-nom','f-metier','f-ville','f-tel','f-email'].forEach(id => document.getElementById(id).value = '');
+  sauvegarder();
+}
+
+// ═══════════════════════════════════════════════════
+// STATUT
+// ═══════════════════════════════════════════════════
+function cycleStatut(id) {
+  const p = prospects.find(x => x.id === id);
+  if (p) {
+    p.statut = (p.statut + 1) % STATUTS.length;
+    sauvegarder();
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// SUPPRIMER
+// ═══════════════════════════════════════════════════
+function supprimerProspect(id) {
+  const p = prospects.find(x => x.id === id);
+  if (p && confirm(`Supprimer "${p.nom}" ?`)) {
+    prospects = prospects.filter(x => x.id !== id);
+    sauvegarder();
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// FILTRES
+// ═══════════════════════════════════════════════════
+function filtrerStatut(s) {
+  filtreStatutActif = s;
+  mettreAJourStats();
+  afficher();
+}
+
+function rechercherProspect(val) {
+  rechercheActuelle = val;
+  afficher();
+}
+
+// ═══════════════════════════════════════════════════
+// NOTES & RAPPEL
+// ═══════════════════════════════════════════════════
+function ouvrirNote(id) {
+  const p = prospects.find(x => x.id === id);
+  if (!p) return;
+  prospectNoteActif = id;
+  document.getElementById('note-nom').textContent = p.nom;
+  document.getElementById('note-texte').value = p.note || '';
+  document.getElementById('note-rappel').value = p.rappel || '';
+  document.getElementById('note-statut').value = String(p.statut);
+  document.getElementById('modal-note').classList.add('open');
+}
+
+function sauvegarderNote() {
+  const p = prospects.find(x => x.id === prospectNoteActif);
+  if (!p) return;
+  p.note   = document.getElementById('note-texte').value.trim();
+  p.rappel = document.getElementById('note-rappel').value;
+  p.statut = parseInt(document.getElementById('note-statut').value);
+  sauvegarder();
+  fermerModal('modal-note');
+}
+
+// ═══════════════════════════════════════════════════
+// GÉNÉRATEUR — ouvre avec infos pré-remplies
+// ═══════════════════════════════════════════════════
+function ouvrirGenerateur(id) {
+  const p = prospects.find(x => x.id === id);
+  if (!p) return;
+  // On encode les infos dans l'URL pour pré-remplir le générateur
+  const params = new URLSearchParams({
+    nom:    p.nom,
+    metier: p.metier,
+    ville:  p.ville,
+    tel:    p.tel || '',
+    email:  p.email || '',
+  });
+  // Marque comme contacté si pas encore fait
+  if (p.statut === 0) { p.statut = 1; p.dernierContact = new Date().toLocaleDateString('fr-FR'); sauvegarder(); }
+  window.open(`../templates/generator/index.html?${params.toString()}`, '_blank');
+}
+
+// ═══════════════════════════════════════════════════
+// MESSAGE
+// ═══════════════════════════════════════════════════
+function ouvrirMessage(id) {
+  const p = prospects.find(x => x.id === id);
+  if (!p) return;
+  prospectMsgActif = p;
+  document.getElementById('modal-nom').textContent = p.nom;
+  // Marque la date de dernier contact
+  p.dernierContact = new Date().toLocaleDateString('fr-FR');
+  if (p.statut === 0) p.statut = 1;
+  sauvegarder();
+  canalActif = 'email';
+  document.querySelectorAll('.canal-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+  document.getElementById('modal-textarea').value = genererTexteMessage(p, 'email');
+  document.getElementById('modal-msg').classList.add('open');
+}
+
+function changerCanal(canal, el) {
+  canalActif = canal;
+  document.querySelectorAll('.canal-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  if (prospectMsgActif) {
+    document.getElementById('modal-textarea').value = genererTexteMessage(prospectMsgActif, canal);
+  }
+}
+
+function genererTexteMessage(p, canal) {
+  const metier = p.metier.toLowerCase();
+  const demoUrl = `https://nanda-web-designer.github.io/Systeme-auro/clients/demo-${metier.replace(/\s/g,'-')}/`;
+
+  let accroche = '';
+  if (metier.includes('plomb')) {
+    accroche = `Quand une canalisation lâche à 22h, le client ouvre Google et appelle le premier plombier qu'il trouve. Sans site, ce n'est pas vous.`;
+  } else if (metier.includes('electr')) {
+    accroche = `Avant de laisser un électricien intervenir chez eux, vos clients vérifient sur Google. Vos concurrents sont déjà en ligne — vous perdez des chantiers chaque jour.`;
+  } else if (metier.includes('coiff')) {
+    accroche = `Avant d'essayer un nouveau coiffeur, les gens vérifient Instagram ou Google. Vos avis sont peut-être excellents — dommage qu'ils soient difficiles à trouver.`;
+  } else if (metier.includes('peintr')) {
+    accroche = `Dans votre métier, une photo vaut mille mots. Vos clients cherchent des exemples avant de vous appeler — sans site, ils appellent quelqu'un d'autre.`;
+  } else if (metier.includes('serr')) {
+    accroche = `En urgence, les gens appellent le premier serrurier qu'ils trouvent sur Google. Sans site, ce n'est jamais vous.`;
+  } else {
+    accroche = `À notre époque, les clients vérifient sur internet avant de faire appel à un prestataire. Vos concurrents apparaissent avant vous sur Google — vous perdez des clients potentiels chaque jour.`;
+  }
+
+  if (canal === 'whatsapp') {
+    return `Bonjour,
+
+J'ai remarqué que *${p.nom}* n'avait pas encore de site web.
+
+${accroche}
+
+Du coup, je l'ai créé pour vous. Votre site est déjà en ligne :
+👉 ${demoUrl}
+
+✅ Vos coordonnées intégrées
+✅ Référencement Google local
+✅ 100% mobile + formulaire contact
+
+*150€ tout compris* — domaine + hébergement inclus.
+
+Vous voulez le garder ? Dites-moi les retouches souhaitées.
+
+Pas intéressé(e) ? Je le supprime dans 48h.
+
+Nanda Web Designer`;
+  }
+
+  return `Bonjour,
+
+J'ai remarqué que ${p.nom} n'avait pas encore de site web — étonnant vu la qualité de votre travail.
+
+${accroche}
+
+Du coup, je l'ai créé pour vous. Votre site est déjà en ligne :
+👉 ${demoUrl}
+
+✅ Vos infos & coordonnées intégrées
+✅ Référencement Google local optimisé
+✅ 100% mobile + desktop
+✅ Formulaire de contact intégré
+
+150€ tout compris — domaine + hébergement illimité inclus.
+
+Vous voulez le garder ? Répondez simplement à ce message et dites-moi les retouches souhaitées.
+
+Pas intéressé(e) ? Je le supprime dans 48h.
+
+Cordialement,
+Nanda Web Designer
+📱 [votre numéro]
+
+P.S. : Vos concurrents apparaissent avant vous sur Google et vous perdez des clients potentiels chaque jour. Ce site règle ça dès demain.`;
+}
+
+function copierMsg() {
+  const ta = document.getElementById('modal-textarea');
+  ta.select();
+  document.execCommand('copy');
+  const el = document.getElementById('copied');
+  el.style.display = 'inline';
+  setTimeout(() => el.style.display = 'none', 2000);
+}
+
+function ouvrirWhatsApp() {
+  if (!prospectMsgActif) return;
+  const msg = genererTexteMessage(prospectMsgActif, 'whatsapp');
+  const tel = prospectMsgActif.tel ? prospectMsgActif.tel.replace(/\D/g,'') : '';
+  const url = tel
+    ? `https://wa.me/${tel.startsWith('0') ? '33' + tel.slice(1) : tel}?text=${encodeURIComponent(msg)}`
+    : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+// ═══════════════════════════════════════════════════
+// MODALS
+// ═══════════════════════════════════════════════════
+function fermerModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+// Fermer en cliquant en dehors
+document.querySelectorAll('.modal').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+
+// ═══════════════════════════════════════════════════
+// PRÉ-REMPLISSAGE depuis le générateur (params URL)
+// ═══════════════════════════════════════════════════
+function lireParamsURL() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('nom')) {
+    document.getElementById('f-nom').value    = params.get('nom') || '';
+    document.getElementById('f-metier').value = params.get('metier') || '';
+    document.getElementById('f-ville').value  = params.get('ville') || '';
+    document.getElementById('f-tel').value    = params.get('tel') || '';
+    document.getElementById('f-email').value  = params.get('email') || '';
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+lireParamsURL();
+afficher();
+mettreAJourStats();
+</script>
+</body>
+</html>
